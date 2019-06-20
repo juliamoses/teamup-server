@@ -1,0 +1,22 @@
+{
+  "name": "sharer",
+  "version": "1.0.0",
+  "description": "a file sharing app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliamoses/teamup-server.git"
+  },
+  "author": "julia moses",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juliamoses/teamup-server/issues"
+  },
+  "homepage": "https://github.com/juliamoses/teamup-server#readme",
+  "devDependencies": {
+    "electron": "^5.0.4"
+  }
+}
