@@ -4,7 +4,7 @@
   "description": "a file sharing app",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron . && node server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
     "electron": "^5.0.4"
   },
   "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
     "jquery": "^3.4.1"
   }
 }
