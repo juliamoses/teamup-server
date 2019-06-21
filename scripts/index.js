@@ -57,13 +57,10 @@ $(document).ready(function () {
   })
 });
 
-window.onbeforeunload = function () {
-  alert("Window Closing");
-}
 function increaseInputs() {
   // This increases the Name-Email inputs when the user clicks the plus signs
   $("#sharee_container").append(createShareerInput());
-  const $col = $("#sharee_container").find(".each-input-div");
+  
   const cols = [...$("#sharee_container").find(".each-input-div")]
 
   console.log(cols);
@@ -72,22 +69,55 @@ function increaseInputs() {
   
   // console.log(cols[0].children[0].value);
   // console.log(cols[0].children[1].value);
-
+  $("#sharee-count-label").text(`(${cols.length}) chunks`);
   iterateThroughValues(cols)
 }
 
+function decreaseInputs() {
+  // Deletes the last name-email input. First get the count of each-input-div.
+  // Will only remove if the count is greater than 2
+  
+  if (getShareeDivCount() > 2) {
+    $("#sharee_container div:last-child").remove();
+    $("#sharee-count-label").text(`(${getShareeDivCount()}) chunks`);
+  }
+  turnMinusButtonONOFF(getShareeDivCount());
+}
+function getShareeDivCount() {
+  let cols = [...$("#sharee_container").find(".each-input-div")];
+  return cols.length;
+}
 function turnMinusButtonONOFF(count) {
-  if (count > 1) {
+  console.log("count line 90", count)
+  if (count > 2) {
     $("#minus-button").css("display", "inline-block");
   } else {
+    
     $("#minus-button").css("display", "none");
   }
 }
+
+function getValidSharers(p_cols) {
+  let sharerArray = []
+  let foundGap = false; // if this is true, this function returns an empty array
+  p_cols.forEach((element, count) => {
+    const nameValue = element.children[0].value = element.children[0].value.trim();
+    const emailValue = element.children[1].value = element.children[1].value.trim();
+    if (nameValue !== "" && emailValue !== "") {
+      sharerArray.push({ name: nameValue, email: emailValue});
+    } else {
+      foundGap = true;
+    }
+    foundGap ? null : sharerArray;
+  })
+}
+
 function iterateThroughValues(p_cols) {
   p_cols.forEach((divElement, counter) => {
     console.log(`sharer: ${counter} name: ${divElement.children[0].value} email: ${divElement.children[1].value}`)
   })
 }
+
 function createShareerInput () {
   const $inputDiv = $("<div/>").addClass("each-input-div");
   const $nameBox = $('<input/>', {type: 'text', placeholder:'Name'}).addClass('sharee_name form-control-sm');
