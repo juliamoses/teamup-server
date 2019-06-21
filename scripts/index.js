@@ -12,7 +12,7 @@ function showFormData() {
   $sharer_name = $sharer_name.trim();
   sharerObject = { sharerName: $sharer_name, sharerEmail: $sharer_email }
   //writeDataFileToDisk(sharerObject);
-  const myStorage = window.localStorage;
+  const myStorage = window.sessionStorage;
   myStorage.clear();
   myStorage.setItem('sharer_name', $sharer_name)
   myStorage.setItem('sharer_email', $sharer_email)
@@ -27,9 +27,11 @@ function showFormData() {
 
 // User selects a file
 $(document).ready(function () {
+  
+  console.log("Session Storage status: ", window.sessionStorage)
   $("#upload_file_path").on('change', (e) =>  {
     const $file_list = e.target.files;
-    const userData = window.localStorage;
+    const userData = window.sessionStorage;
     userData.setItem('file_name', $file_list[0].name);
     userData.setItem('file_path', $file_list[0].path);
     userData.setItem('file_size', $file_list[0].size);
@@ -37,8 +39,9 @@ $(document).ready(function () {
     console.log(userData);
     
     const $fileSizeElement = createFileSizeP($file_list[0].size);
-    $("#file_info").append($fileSizeElement);
-    $("#file_info").append(createFilePath($file_list[0].path));
+    const $fileNameElement = $('<p>', {text: `File Name: ${$file_list[0].name}`});
+    $("#file_info").append($fileNameElement, $fileSizeElement, createFilePath($file_list[0].path));
+    
   })
   
   $("#pickFileNextButton").on('click', (e)=> {
@@ -49,11 +52,14 @@ $(document).ready(function () {
       return;
     }
     // If file chosen, navigate to the sharerSelect page
-    window.location.href ="chooseshare.html"
+    window.location.href ="chooseshare.html";
     
   })
 });
 
+window.onbeforeunload = function () {
+  alert("Window Closing");
+}
 function increaseInputs() {
   // This increases the Name-Email inputs when the user clicks the plus signs
   $("#sharee_container").append(createShareerInput());
@@ -92,9 +98,10 @@ function createShareerInput () {
 }
 function createFileSizeP (sizeData) {
   const $size = $("<p>", {text: `File size: ${Math.floor(sizeData / 1000)}  KB`}).addClass("file_size")
-  return $size
+  return $size;
 }
 function createFilePath (pathData) {
-  const $fpath = $("<p>", {text: `${pathData}`}).addClass("file_path");
-  return $fpath
+  const $fpath = $("<p>", {text: `Path: ${pathData}`}).addClass("file_path");
+  return $fpath;
 }
+
