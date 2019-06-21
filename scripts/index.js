@@ -48,6 +48,7 @@ $(document).ready(function () {
       alert("Please choose a file");
       return;
     }
+    // If file chosen, navigate to the sharerSelect page
     window.location.href ="chooseshare.html"
     
   })
