@@ -1,16 +1,19 @@
 window.$ = window.jQuery = require('jquery');
 
 const fs = require('fs');
-const jsonPath = __dirname + "/data" + "/data.json";
+
+const splitter = require('split-file');
 
 function showFormData() {
   // Obtain values from textboxes
   $sharer_name = $("#sharer_name").val();
   $sharer_email = $("#sharer_email").val();
+
   // Ensure there are no extra white spaces
   $sharer_email = $sharer_email.trim();
   $sharer_name = $sharer_name.trim();
   sharerObject = { sharerName: $sharer_name, sharerEmail: $sharer_email }
+
   //writeDataFileToDisk(sharerObject);
   const myStorage = window.sessionStorage;
   myStorage.clear();
@@ -24,10 +27,8 @@ function showFormData() {
   window.location.href = "pickfile.html"
 }
 
-
 // User selects a file
 $(document).ready(function () {
-  
   console.log("Session Storage status: ", window.sessionStorage)
   $("#upload_file_path").on('change', (e) =>  {
     const $file_list = e.target.files;
@@ -83,7 +84,7 @@ function decreaseInputs() {
   turnMinusButtonONOFF(getShareeDivs().length);
 }
 
-// Returns the sharee name-email divs
+// Returns the sharee name-email divs as an array
 function getShareeDivs() {
   let cols = [...$("#sharee_container").find(".each-input-div")];
   return cols;
@@ -104,6 +105,7 @@ function getValidSharers() {
   let sharerArray = []
   let foundGap = false; // if this is true, this function returns an empty array
   let foundInvalidEmail = false;
+
   p_cols.forEach((element, count) => {
     const nameValue = element.children[0].value = element.children[0].value.trim();
     const emailValue = element.children[1].value = element.children[1].value.trim();
@@ -117,6 +119,7 @@ function getValidSharers() {
       foundGap = true;
     }
   })
+
   if (foundInvalidEmail) {
     alert("Invalid or empty email address detected");
     return;
@@ -127,6 +130,8 @@ function getValidSharers() {
     const session = window.sessionStorage;
     session.setItem('sharees', JSON.stringify(finalVal));
     console.log(session);
+
+    // Here is where we need to chunk the file
   } else {
     alert("Ensure all fields of all rows are filled out, or decrease the amount of rows");
   }
@@ -151,12 +156,14 @@ function createShareerInput () {
   $inputDiv.append($nameBox, $emailBox);
   return $inputDiv;
 }
+
 function createFileSizeP (sizeData) {
-  const $size = $("<p>", {text: `File size: ${Math.floor(sizeData / 1000)}  KB`}).addClass("file_size")
+  const $size = $("<p>", { text: `File size: ${Math.floor(sizeData / 1000)}  KB`}).addClass("file_size")
   return $size;
 }
+
 function createFilePath (pathData) {
-  const $fpath = $("<p>", {text: `Path: ${pathData}`}).addClass("file_path");
+  const $fpath = $("<p>", { text: `Path: ${pathData}`}).addClass("file_path");
   return $fpath;
 }
 
