@@ -35,7 +35,8 @@ app.get("/", (req, res) => {
 
 /////////POST REQUESTS/////////////////////(most to least specific)
 
-
+//server will look for file assoiated with email
+//set up test
 
 
 /////////APP.LISTEN///////////////////////////
