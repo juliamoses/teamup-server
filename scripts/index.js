@@ -136,6 +136,7 @@ function isValidEmail(emailAddress) {
   const patt = /^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$/
   return patt.test(emailAddress);
 }
+
 function iterateThroughValues(p_cols) {
   p_cols.forEach((divElement, counter) => {
     console.log(`sharer: ${counter} name: ${divElement.children[0].value} email: ${divElement.children[1].value}`)
