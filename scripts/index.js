@@ -1,8 +1,8 @@
 window.$ = window.jQuery = require('jquery');
 
 const fs = require('fs');
-
 const splitter = require('split-file');
+const uuid = require('uuid/v1');
 
 function showFormData() {
   // Obtain values from textboxes
@@ -91,8 +91,9 @@ function getShareeDivs() {
   return cols;
 }
 
+// The minus button disappears when there are two shareeDivs (so user cannot subtract)
+// Any more sharee input boxes - there must be at least two
 function turnMinusButtonONOFF(count) {
-  console.log("count line 90", count)
   if (count > 2) {
     $("#minus-button").css("display", "inline-block");
   } else {
@@ -101,6 +102,7 @@ function turnMinusButtonONOFF(count) {
   }
 }
 
+// Called by the chooseshare.html
 function getValidSharers() {
   const p_cols = getShareeDivs();
   let sharerArray = []
@@ -145,9 +147,7 @@ function splitFile (filePath) {
   // We need number of sharees
   const session = window.sessionStorage;
   shareeArray = JSON.parse(session.getItem('sharees'));
-  const numChunks = shareeArray.length; // chunk file into parts according to sharee count
-
-  
+  const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
 }
 
 function isValidEmail(emailAddress) {
