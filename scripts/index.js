@@ -133,9 +133,21 @@ function getValidSharers() {
     console.log(session);
 
     // Here is where we need to chunk the file
+    $('#section-status-message').append($('<p>', {text: 'Splitting file...'}));
+    splitFile(session.getItem('file_path'));
   } else {
     alert("Ensure all fields of all rows are filled out, or decrease the amount of rows");
   }
+}
+
+function splitFile (filePath) {
+  // File path should be a full qualified path
+  // We need number of sharees
+  const session = window.sessionStorage;
+  shareeArray = JSON.parse(session.getItem('sharees'));
+  const numChunks = shareeArray.length; // chunk file into parts according to sharee count
+
+  
 }
 
 function isValidEmail(emailAddress) {
