@@ -148,6 +148,16 @@ function splitFile (filePath) {
   const session = window.sessionStorage;
   shareeArray = JSON.parse(session.getItem('sharees'));
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
+  let myId = uuid();
+  console.log("uuid", myId);
+
+  // Create a new subdirectory witha UUID
+  fs.mkdir(__dirname + "/static" + "/" + myId, (err) => {
+    if (err) {
+      // Error
+      console.log(err);
+    }
+  })
 }
 
 function isValidEmail(emailAddress) {
@@ -179,4 +189,3 @@ function createFilePath (pathData) {
   const $fpath = $("<p>", { text: `Path: ${pathData}`}).addClass("file_path");
   return $fpath;
 }
-
