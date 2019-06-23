@@ -41,6 +41,7 @@ $(document).ready(function () {
     
     const $fileSizeElement = createFileSizeP($file_list[0].size);
     const $fileNameElement = $('<p>', {text: `File Name: ${$file_list[0].name}`});
+    // Delete the first element before appending
     $("#file_info").append($fileNameElement, $fileSizeElement, createFilePath($file_list[0].path));
     
   })
