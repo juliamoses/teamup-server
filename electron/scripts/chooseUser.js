@@ -3,7 +3,7 @@ window.$ = window.jQuery = require('jquery');
 const fs = require('fs');
 const splitter = require('split-file');
 const uuid = require('uuid/v1');
-
+const path = require('path');
 
 
 function increaseInputs() {
@@ -100,11 +100,18 @@ function splitFile (filePath) {
   const outputPath = __dirname + "/static" + "/" + myId
   // Create a new subdirectory witha UUID
   fs.mkdir(outputPath, (err) => {
-    if (err) {
-      // Error
-      console.log(err);
-    }
+    // if (err) {
+    //   // Error
+    //   console.log(err);
+    // }
     splitter.splitFile(filePath, numChunks)
+    .then ((names) => {
+      console.log("names", names);
+      const parsedObject  = path.parse(names[0]);
+      console.log("Path =", parsedObject)
+      const fileName = parsedObject.name + parsedObject.ext
+      console.log("File Name:", fileName)
+    })
   })
 }
 
