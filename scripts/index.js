@@ -27,6 +27,9 @@ function showFormData() {
   window.location.href = "pickfile.html"
 }
 
+function copyTargetFileOver (targetFile) {
+  /** This method copies the file to the local internal */
+}
 // User selects a file
 $(document).ready(function () {
   console.log("Session Storage status: ", window.sessionStorage)
@@ -150,13 +153,14 @@ function splitFile (filePath) {
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
   let myId = uuid();
   console.log("uuid", myId);
-
+  const outputPath = __dirname + "/static" + "/" + myId
   // Create a new subdirectory witha UUID
-  fs.mkdir(__dirname + "/static" + "/" + myId, (err) => {
+  fs.mkdir(outputPath, (err) => {
     if (err) {
       // Error
       console.log(err);
     }
+    splitter.splitFile(filePath, numChunks)
   })
 }
 
