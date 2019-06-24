@@ -31,7 +31,7 @@ $(document).ready(function () {
       return;
     }
     // If file chosen, navigate to the sharerSelect page
-    window.location.href ="chooseshare.html";
+    window.location.href ="../public/chooseshare.html";
     
   })
 });
