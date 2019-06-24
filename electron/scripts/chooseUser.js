@@ -4,6 +4,7 @@ const fs = require('fs');
 const splitter = require('split-file');
 const uuid = require('uuid/v1');
 const path = require('path');
+const rootPath =require('electron-root-path').rootPath;
 
 
 function increaseInputs() {
@@ -97,20 +98,22 @@ function splitFile (filePath) {
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
   let myId = uuid();
   console.log("uuid", myId);
-  const outputPath = __dirname + "/static" + "/" + myId
+  const outputPath = path.join(rootPath + "/static/", myId)
   // Create a new subdirectory witha UUID
   fs.mkdir(outputPath, (err) => {
-    // if (err) {
-    //   // Error
-    //   console.log(err);
-    // }
+    if (err) {
+      // Error
+      console.log(err);
+    }
     splitter.splitFile(filePath, numChunks)
     .then ((names) => {
-      console.log("names", names);
       const parsedObject  = path.parse(names[0]);
-      console.log("Path =", parsedObject)
       const fileName = parsedObject.name + parsedObject.ext
-      console.log("File Name:", fileName)
+      const copyToPath = outputPath + "/"
+      let chunkObject = [];
+      names.forEach((filepath, index)=> {
+        chunkObject.push({path: outputPath + "/" + fileName})
+      })
     })
   })
 }
