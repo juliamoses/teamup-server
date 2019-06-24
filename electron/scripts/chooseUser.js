@@ -112,8 +112,9 @@ function splitFile (filePath) {
       const copyToPath = outputPath + "/"
       let chunkObject = [];
       names.forEach((filepath, index)=> {
-        chunkObject.push({path: outputPath + "/" + fileName})
+        chunkObject.push({path: outputPath + "/" + fileName, userName: shareeArray[index].name, userEmail: shareeArray[index].email})
       })
+      console.log("chunk object", chunkObject);
     })
   })
 }
