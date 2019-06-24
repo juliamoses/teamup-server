@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Sys Info Title</title>
   <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
-  <script src="scripts/index.js"></script>
+  <script src="electron/scripts/getSharerInfo.js"></script>
 </head>
 <body>
     <div class="jumbotron">
@@ -19,7 +19,7 @@
         <input type="email" class="form-control" id="sharer_email" aria-describedby="emailHelp" placeholder="Enter email" required>
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
       </div>
-      <button type="button" onclick= "showFormData()" class="btn btn-primary btn-lg">Next</button>
+      <button type="button" onclick= "getSharerInfo()" class="btn btn-primary btn-lg">Next</button>
     </div>
 </body>
 
