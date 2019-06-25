@@ -126,7 +126,7 @@ function splitFile (filePath) {
         .then(()=> {
 
           const stats = fs.statSync(finalDestinationPath)
-          chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email})
+          chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email, done: false })
           session.setItem('chunkInfo', JSON.stringify(chunkArray));
           // Update the progress bar
          
