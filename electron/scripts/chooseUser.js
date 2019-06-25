@@ -144,6 +144,7 @@ function splitFile (filePath) {
       console.log("Line 136 finally session", session);
       $('#status-message').text('Status: Splitting completed');
       $('#progressSpinner').css('display', 'none');
+      window.location.href ="../public/sharerserver.html";
     })
   })
 }
