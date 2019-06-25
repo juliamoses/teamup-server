@@ -97,6 +97,7 @@ function splitFile (filePath) {
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
   let myId = uuid();
   const outputPath = path.join(rootPath + "/static/", myId)
+  session.setItem('id', JSON.stringify(myId));
   // Create a new subdirectory witha UUID
   fs.mkdir(outputPath, (err) => {
     if (err) {
@@ -119,7 +120,7 @@ function splitFile (filePath) {
         fsExtra.move(originalFilePath, finalDestinationPath)
         .then(()=> {
           const stats = fs.statSync(finalDestinationPath)
-          chunkArray.push({uuid: myId, uuid_path: finalDestinationPath, fileSize: stats.size, forUserName: shareeArray[index].name, forUserEmail: shareeArray[index].email})
+          chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email})
           session.setItem('chunkInfo', JSON.stringify(chunkArray));
           
         })
