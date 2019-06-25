@@ -5,7 +5,7 @@ const splitter = require('split-file');
 const uuid = require('uuid/v1');
 const path = require('path');
 const rootPath =require('electron-root-path').rootPath;
-
+const fsExtra = require('fs-extra');
 
 function increaseInputs() {
   // This increases the Name-Email inputs when the user clicks the plus signs
@@ -97,31 +97,51 @@ function splitFile (filePath) {
   shareeArray = JSON.parse(session.getItem('sharees'));
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
   let myId = uuid();
-  console.log("uuid", myId);
   const outputPath = path.join(rootPath + "/static/", myId)
   // Create a new subdirectory witha UUID
   fs.mkdir(outputPath, (err) => {
     if (err) {
       // Error
       console.log(err);
+      return;
     }
+    // No error, split the file. After split, iterate through the names and copy the
+    // chunks over ot the UUID directory. Create a JSON chunks object in session
+    // storage
+    let chunkArray = []; // Going to contain an array of chunk info objects that will
+    // be written to sessionStorage
     splitter.splitFile(filePath, numChunks)
     .then ((names) => {
-      const parsedObject  = path.parse(names[0]);
-      const fileName = parsedObject.name + parsedObject.ext
-      const copyToPath = outputPath + "/"
-      let chunkObject = [];
-      names.forEach((filepath, index)=> {
-        chunkObject.push({path: outputPath + "/" + fileName, userName: shareeArray[index].name, userEmail: shareeArray[index].email})
+      
+      names.forEach((originalFilePath, index) => {
+        const parsedFileNameObject = path.parse(originalFilePath);
+        const pathFromParsedFileNameObject = parsedFileNameObject.name + parsedFileNameObject.ext;
+        const finalDestinationPath = outputPath + "/" + pathFromParsedFileNameObject;
+        fsExtra.move(originalFilePath, finalDestinationPath)
+        .then(()=> {
+          chunkArray.push({uuid_path: finalDestinationPath, forUserName: shareeArray[index].name, forUserEmail: shareeArray[index].email})
+          session.setItem('chunkInfo', JSON.stringify(chunkArray));
+          
+        })
+        .catch((err) => {
+          console.log("Line 120 ERROR", err)
+        })
+        .finally(()=> {
+          //console.log("finally session", session);
+        })
       })
-      console.log("chunk object", chunkObject);
+    })
+    .then (()=> {
+      
+      console.log("Line 136 finally session", session);
     })
   })
 }
 
 function isValidEmail(emailAddress) {
   const patt = /^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$/
-  return patt.test(emailAddress);
+  //return patt.test(emailAddress);
+  return true; // Testing
 }
 
 function iterateThroughValues(p_cols) {
