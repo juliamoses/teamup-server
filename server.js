@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 8080;
 
 
 /////////APP.USE///////////////////////////
-app.use(express.static('sharerFiles'))
+app.use(express.static('static'))
 
 
 /////////APP.SET///////////////////////////
