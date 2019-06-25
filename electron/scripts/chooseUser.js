@@ -82,7 +82,7 @@ function getValidSharers() {
     session.setItem('sharees', JSON.stringify(finalVal));
    
     // Here is where we need to chunk the file
-    $('#status-message').text('Status: Splitting File...');
+    $('#status-message').text('Status: Splitting file...(this could take several minutes depending on file size');
     $('#progressSpinner').css('display', 'flex');
     // Splitting is about to happen - disable the 'next' button
     $('#buttonStartSplit').attr('disabled', true);
@@ -141,12 +141,30 @@ function splitFile (filePath) {
     })
     .then (()=> {
       
-      console.log("Line 136 finally session", session);
+      // console.log("Line 136 finally session", session);
       $('#status-message').text('Status: Splitting completed');
       $('#progressSpinner').css('display', 'none');
+      const JSONData = formatDatabaseJSONObject();
+      console.log("Line 148 ", JSONData);
       window.location.href ="../public/sharerserver.html";
     })
   })
+}
+
+function formatDatabaseJSONObject() {
+  /**
+   * This formats the MongoDB JSON object
+   */
+  session = window.sessionStorage;
+  let fObject = {}
+  fObject.id = session.id;
+  fObject.file_name = session.file_name;
+  const chunkObjects = JSON.parse(session.chunkInfo);
+  fObject.chunks = chunkObjects;
+  fObject.size = session.file_size;
+  fObject.done = false;
+
+  return fObject;
 }
 
 function isValidEmail(emailAddress) {
