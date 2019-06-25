@@ -10,3 +10,4 @@ function sendAjaxRequestToDB(data) {
     }
   })
 }
+

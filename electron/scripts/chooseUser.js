@@ -144,8 +144,8 @@ function splitFile (filePath) {
       // console.log("Line 136 finally session", session);
       $('#status-message').text('Status: Splitting completed');
       $('#progressSpinner').css('display', 'none');
-      const JSONData = formatDatabaseJSONObject();
-      console.log("Line 148 ", JSONData);
+      // const JSONData = formatDatabaseJSONObject();
+      // console.log("Line 148 ", JSONData);
       window.location.href ="../public/sharerserver.html";
     })
   })
