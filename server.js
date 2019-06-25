@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 
 //server will look for file assoiated with email
 //set up test
-app.post("/sharerFiles/:fileName", (req, res) => {
+app.post("/sharerFiles/:email", (req, res) => {
 	//point to file location
   res.render("/");
 });
