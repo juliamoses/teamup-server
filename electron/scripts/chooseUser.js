@@ -80,8 +80,7 @@ function getValidSharers() {
     // Store in session storage
     const session = window.sessionStorage;
     session.setItem('sharees', JSON.stringify(finalVal));
-    console.log(session);
-
+   
     // Here is where we need to chunk the file
     $('#section-status-message').append($('<p>', {text: 'Splitting file...'}));
     splitFile(session.getItem('file_path'));
@@ -119,7 +118,7 @@ function splitFile (filePath) {
         const finalDestinationPath = outputPath + "/" + pathFromParsedFileNameObject;
         fsExtra.move(originalFilePath, finalDestinationPath)
         .then(()=> {
-          chunkArray.push({uuid_path: finalDestinationPath, forUserName: shareeArray[index].name, forUserEmail: shareeArray[index].email})
+          chunkArray.push({uuid: myId, uuid_path: finalDestinationPath, forUserName: shareeArray[index].name, forUserEmail: shareeArray[index].email})
           session.setItem('chunkInfo', JSON.stringify(chunkArray));
           
         })
