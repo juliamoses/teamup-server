@@ -15,9 +15,11 @@ app.use(express.static('sharerFiles'))
 app.set("view engine", "ejs");
 
 
-
 /////////HELPER FUNCTIONS//////////////////
 
+//TODO
+//have user enter email address, move chunks to unique folder
+//we give them a link on page render that belongs to that email (and chunk)
 
 /////////GET REQUESTS/////////////////////(most to least specific)
 //render app
