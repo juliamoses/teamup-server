@@ -118,7 +118,8 @@ function splitFile (filePath) {
         const finalDestinationPath = outputPath + "/" + pathFromParsedFileNameObject;
         fsExtra.move(originalFilePath, finalDestinationPath)
         .then(()=> {
-          chunkArray.push({uuid: myId, uuid_path: finalDestinationPath, forUserName: shareeArray[index].name, forUserEmail: shareeArray[index].email})
+          const stats = fs.statSync(finalDestinationPath)
+          chunkArray.push({uuid: myId, uuid_path: finalDestinationPath, fileSize: stats.size, forUserName: shareeArray[index].name, forUserEmail: shareeArray[index].email})
           session.setItem('chunkInfo', JSON.stringify(chunkArray));
           
         })
