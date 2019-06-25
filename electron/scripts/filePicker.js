@@ -14,6 +14,7 @@ $(document).ready(function () {
     userData.setItem('file_path', $file_list[0].path);
     userData.setItem('file_size', $file_list[0].size);
     userData.setItem('file_type', $file_list[0].type);
+    userData.setItem('done', false);
     console.log(userData);
     
     const $fileSizeElement = createFileSizeP($file_list[0].size);
