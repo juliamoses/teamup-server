@@ -82,7 +82,10 @@ function getValidSharers() {
     session.setItem('sharees', JSON.stringify(finalVal));
    
     // Here is where we need to chunk the file
-    $('#section-status-message').append($('<p>', {text: 'Splitting file...'}));
+    $('#status-message').text('Status: Splitting File...');
+    $('#progressSpinner').css('display', 'flex');
+    // Splitting is about to happen - disable the 'next' button
+    $('#buttonStartSplit').attr('disabled', true);
     splitFile(session.getItem('file_path'));
   } else {
     alert("Ensure all fields of all rows are filled out, or decrease the amount of rows");
@@ -97,7 +100,8 @@ function splitFile (filePath) {
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
   let myId = uuid();
   const outputPath = path.join(rootPath + "/static/", myId)
-  session.setItem('id', JSON.stringify(myId));
+  session.setItem('id', myId);
+
   // Create a new subdirectory witha UUID
   fs.mkdir(outputPath, (err) => {
     if (err) {
@@ -113,16 +117,19 @@ function splitFile (filePath) {
     splitter.splitFile(filePath, numChunks)
     .then ((names) => {
       
+      
       names.forEach((originalFilePath, index) => {
         const parsedFileNameObject = path.parse(originalFilePath);
         const pathFromParsedFileNameObject = parsedFileNameObject.name + parsedFileNameObject.ext;
         const finalDestinationPath = outputPath + "/" + pathFromParsedFileNameObject;
         fsExtra.move(originalFilePath, finalDestinationPath)
         .then(()=> {
+
           const stats = fs.statSync(finalDestinationPath)
           chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email})
           session.setItem('chunkInfo', JSON.stringify(chunkArray));
-          
+          // Update the progress bar
+         
         })
         .catch((err) => {
           console.log("Line 120 ERROR", err)
@@ -135,6 +142,8 @@ function splitFile (filePath) {
     .then (()=> {
       
       console.log("Line 136 finally session", session);
+      $('#status-message').text('Status: Splitting completed');
+      $('#progressSpinner').css('display', 'none');
     })
   })
 }
