@@ -1,9 +1,12 @@
+
+
 /////////REQUIRES///////////////////////////
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-
+//allinside a function- refrenct=e funtion in html 
+//'on click'of start serverbutton in electron
 /////////APP.USE///////////////////////////
 app.use(express.static('static'))
 
@@ -28,7 +31,7 @@ app.get("/sharerFiles/:fileName", (req, res) => {
   res.render("/");
 });
 
-//
+//to render the files
 app.get("/", (req, res) => {
   res.render("files_form");
 });
@@ -41,8 +44,19 @@ app.get("/", (req, res) => {
 //set up test
 app.post("/sharerFiles/:email", (req, res) => {
 	//point to file location
+	//req.params
   res.render("/");
 });
+
+//post to render link on page
+app.post("", (req, res) => {
+
+})
+
+// //post to update
+// app.post("/order/update", (req, res) => {
+//   res.redirect("order");
+// });
 
 
 /////////APP.LISTEN///////////////////////////
