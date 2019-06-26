@@ -12,6 +12,7 @@ $(document).ready(function (){
   // Testdata
   const JSONData = formatDatabaseJSONObject ();
   console.log("JSONDATA", JSONData);
+  doAjaxRequest(JSONData)
 })
 
 function updateLocalIP() {
@@ -20,6 +21,15 @@ function updateLocalIP() {
   .then (result => {
     $("#local-ip-label").text(result);
   })
+}
+
+function doAjaxRequest (data) {
+  const stringifiedData = JSON.stringify(data);
+  
+  $.post('http://localhost:8081/',stringifiedData)
+  .then((success)=> {
+    console.log(success);
+  });
 }
 
 function formatDatabaseJSONObject() {
