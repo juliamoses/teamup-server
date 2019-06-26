@@ -7,7 +7,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-//allinside a function- refrenct=e funtion in html 
+//allinside a function- refrence funtion in html 
 //'on click'of start serverbutton in electron
 
 app.use(express.static('static'))
@@ -26,6 +26,9 @@ app.set("view engine", "ejs");
 //have user enter email address, move chunks to unique folder
 //we give them a link on page render that belongs to that email (and chunk)
 
+//when uploarer
+//loop through chunks for 
+
 
 //render app
 app.get("/sharerFiles/:fileName", (req, res) => {
@@ -37,9 +40,6 @@ app.get("/sharerFiles/:fileName", (req, res) => {
 app.get("/", (req, res) => {
   res.render("files_form");
 });
-
-
-
 
 
 //server will look for file assoiated with email
