@@ -24,9 +24,9 @@ function updateLocalIP() {
 }
 
 function doAjaxRequest (data) {
-  const stringifiedData = JSON.stringify(data);
-  
-  $.post('http://localhost:8081/',stringifiedData)
+  //const stringifiedData = JSON.stringify(data);
+  //console.log('Line 28 stringified', stringifiedData)
+  $.post('http://localhost:8081/',data)
   .then((success)=> {
     console.log(success);
   });
@@ -41,7 +41,7 @@ function formatDatabaseJSONObject() {
   fObject.id = session.id;
   fObject.file_name = session.file_name;
   const chunkObjects = JSON.parse(session.chunkInfo);
-  fObject.chunks = chunkObjects;
+  fObject.chunks = JSON.stringify(chunkObjects);
   fObject.size = session.file_size;
   fObject.done = false;
 
