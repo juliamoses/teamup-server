@@ -99,55 +99,37 @@ function splitFile (filePath) {
   shareeArray = JSON.parse(session.getItem('sharees'));
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
   let myId = uuid();
-  const outputPath = path.join(rootPath + "/static/", myId)
+  const outputPath = path.join(rootPath, "/static/")
   session.setItem('id', myId);
 
-  // Create a new subdirectory witha UUID
-  fs.mkdir(outputPath, (err) => {
-    if (err) {
-      // Error
-      console.log(err);
-      return;
-    }
-    // No error, split the file. After split, iterate through the names and copy the
-    // chunks over ot the UUID directory. Create a JSON chunks object in session
-    // storage
-    let chunkArray = []; // Going to contain an array of chunk info objects that will
-    // be written to sessionStorage
-    splitter.splitFile(filePath, numChunks)
-    .then ((names) => {
-      
-      
+  
+  let chunkArray = []; // Going to contain an array of chunk info objects that will
+  // be written to sessionStorage
+  splitter.splitFile(filePath, numChunks)
+  .then ((names) => {
       names.forEach((originalFilePath, index) => {
-        const parsedFileNameObject = path.parse(originalFilePath);
-        const pathFromParsedFileNameObject = parsedFileNameObject.name + parsedFileNameObject.ext;
-        const finalDestinationPath = outputPath + "/" + pathFromParsedFileNameObject;
-        fsExtra.move(originalFilePath, finalDestinationPath)
-        .then(()=> {
+      const parsedFileNameObject = path.parse(originalFilePath);
+      
+      const finalDestinationPath = outputPath + parsedFileNameObject.name + parsedFileNameObject.ext;
+      console.log("Line 114", originalFilePath, "move path: "+ finalDestinationPath)
+      fsExtra.move(originalFilePath, finalDestinationPath)
+      .then(()=> {
 
-          const stats = fs.statSync(finalDestinationPath)
-          chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email, done: false })
-          session.setItem('chunkInfo', JSON.stringify(chunkArray));
-          // Update the progress bar
-         
-        })
-        .catch((err) => {
-          console.log("Line 120 ERROR", err)
-        })
-        .finally(()=> {
-          //console.log("finally session", session);
-        })
+        const stats = fs.statSync(finalDestinationPath)
+        chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email, done: false })
+        session.setItem('chunkInfo', JSON.stringify(chunkArray));
+       
+        
+      })
+      .catch((err) => {
+        console.log("Line 120 ERROR", err)
       })
     })
-    .then (()=> {
-      
-      // console.log("Line 136 finally session", session);
-      $('#status-message').text('Status: Splitting completed');
-      $('#progressSpinner').css('display', 'none');
-      // const JSONData = formatDatabaseJSONObject();
-      // console.log("Line 148 ", JSONData);
-      window.location.href ="../public/sharerserver.html";
-    })
+  })
+  .then (()=> {
+    $('#status-message').text('Status: Splitting completed');
+    $('#progressSpinner').css('display', 'none');
+    //window.location.href ="../public/sharerserver.html";
   })
 }
 
