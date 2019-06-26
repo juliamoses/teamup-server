@@ -1,30 +1,32 @@
 
+//node server.js > ./server.out. call using exec
+//instead ping everyone on electorn that link ready
+//get request that starts server
 
-/////////REQUIRES///////////////////////////
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 //allinside a function- refrenct=e funtion in html 
 //'on click'of start serverbutton in electron
-/////////APP.USE///////////////////////////
+
 app.use(express.static('static'))
 
 
-/////////APP.SET///////////////////////////
+
 //how directory will be structured
 //hosting a directory
 //ill have each chunk in folder- assigneed to people
 app.set("view engine", "ejs");
 
+//js functions that call comd line using child process
 
-/////////HELPER FUNCTIONS//////////////////
 
 //TODO
 //have user enter email address, move chunks to unique folder
 //we give them a link on page render that belongs to that email (and chunk)
 
-/////////GET REQUESTS/////////////////////(most to least specific)
+
 //render app
 app.get("/sharerFiles/:fileName", (req, res) => {
 	//point to file location
@@ -38,7 +40,7 @@ app.get("/", (req, res) => {
 
 
 
-/////////POST REQUESTS/////////////////////(most to least specific)
+
 
 //server will look for file assoiated with email
 //set up test
@@ -50,7 +52,7 @@ app.post("/sharerFiles/:email", (req, res) => {
 
 //post to render link on page
 app.post("", (req, res) => {
-
+	res.render
 })
 
 // //post to update
@@ -59,7 +61,6 @@ app.post("", (req, res) => {
 // });
 
 
-/////////APP.LISTEN///////////////////////////
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
