@@ -111,15 +111,14 @@ function splitFile (filePath) {
       const parsedFileNameObject = path.parse(originalFilePath);
       
       const finalDestinationPath = outputPath + parsedFileNameObject.name + parsedFileNameObject.ext;
-      console.log("Line 114", originalFilePath, "move path: "+ finalDestinationPath)
+      console.log("Line 114 originalFilePath", originalFilePath)
+      const stats = fs.statSync(originalFilePath)
+      chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email, done: false })
       fsExtra.move(originalFilePath, finalDestinationPath)
       .then(()=> {
 
-        const stats = fs.statSync(finalDestinationPath)
-        chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email, done: false })
-        session.setItem('chunkInfo', JSON.stringify(chunkArray));
-       
         
+        session.setItem('chunkInfo', JSON.stringify(chunkArray));
       })
       .catch((err) => {
         console.log("Line 120 ERROR", err)
@@ -129,7 +128,7 @@ function splitFile (filePath) {
   .then (()=> {
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
-    //window.location.href ="../public/sharerserver.html";
+    window.location.href ="../public/sharerserver.html";
   })
 }
 
