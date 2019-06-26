@@ -128,18 +128,19 @@ function splitFile (filePath) {
   .then (()=> {
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
-    writeJSONDataFile(sesion);
+    writeJSONDataFile(session);
     window.location.href ="../public/sharerserver.html";
   })
 }
 
 function writeJSONDataFile(data) {
   const outputPath = path.join(rootPath, "/static/fileInfo.json");
-  if(fs.exists(outputPath)) {
+  console.log("output path", outputPath);
+  if (fs.existsSync(outputPath)) {
     fs.unlinkSync(outputPath);
   }
 
-  fs.writeFile(data, JSON, (err) => {
+  fs.writeFile(outputPath, JSON.stringify(data), (err) => {
     if (err) throw err;
     console.log("JSON Data written to file succesfully")
   })
