@@ -6,7 +6,6 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
-//const fileInfo = require('./static/fileInfo.json');
 
 
 
@@ -56,13 +55,13 @@ app.post("/sharerFiles/:email", (req, res) => {
 
 //post to render link on page
 app.post("/", (req, res) => {
-	console.log(req.body.email);
-})
+	const fileInfo = require('./static/fileInfo.json');
+	const sharees = JSON.parse(fileInfo.sharees);
+	const email = req.body.email;
 
-// //post to update
-// app.post("/order/update", (req, res) => {
-//   res.redirect("order");
-// });
+	console.log(sharees.find( (sharee) => { return sharee.email === email } ));
+
+})
 
 
 app.listen(PORT, () => {

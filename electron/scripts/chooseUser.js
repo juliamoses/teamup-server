@@ -153,6 +153,7 @@ function formatDatabaseJSONObject() {
   let fObject = {}
   fObject.id = session.id;
   fObject.file_name = session.file_name;
+  console.log("chunk", session.chunkInfo);
   const chunkObjects = JSON.parse(session.chunkInfo);
   fObject.chunks = chunkObjects;
   fObject.size = session.file_size;
