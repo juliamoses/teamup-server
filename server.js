@@ -6,12 +6,16 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
+//const fileInfo = require('./static/fileInfo.json');
+
+
 
 //allinside a function- refrence funtion in html 
 //'on click'of start serverbutton in electron
 
 app.use(express.static('static'))
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 
 //how directory will be structured
@@ -51,8 +55,8 @@ app.post("/sharerFiles/:email", (req, res) => {
 });
 
 //post to render link on page
-app.post("", (req, res) => {
-	res.render
+app.post("/", (req, res) => {
+	console.log(req.body.email);
 })
 
 // //post to update
