@@ -128,10 +128,22 @@ function splitFile (filePath) {
   .then (()=> {
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
+    writeJSONDataFile(sesion);
     window.location.href ="../public/sharerserver.html";
   })
 }
 
+function writeJSONDataFile(data) {
+  const outputPath = path.join(rootPath, "/static/fileInfo.json");
+  if(fs.exists(outputPath)) {
+    fs.unlinkSync(outputPath);
+  }
+
+  fs.writeFile(data, JSON, (err) => {
+    if (err) throw err;
+    console.log("JSON Data written to file succesfully")
+  })
+}
 function formatDatabaseJSONObject() {
   /**
    * This formats the MongoDB JSON object

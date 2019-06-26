@@ -2,6 +2,8 @@
 window.$ = window.jQuery = require('jquery');
 const internalIp = require('internal-ip');
 const sf = require('split-file');
+const fs = require('fs');
+const rootPath =require('electron-root-path').rootPath;
 
 $(document).ready(function (){
   updateLocalIP();
@@ -9,11 +11,15 @@ $(document).ready(function (){
   console.log(sessionStorage);
   $("#team-up-link").text(`localhost:3000/${session.id}`);
 
-  // Testdata
+  // Send a request to the database to give it the file info
   const JSONData = formatDatabaseJSONObject ();
-  console.log("JSONDATA", JSONData);
   doAjaxRequest(JSONData)
+
+  // Write the JSON file to static folder
+  
+
 })
+
 
 function updateLocalIP() {
   // Using the internalIPAddress, update the local IP
