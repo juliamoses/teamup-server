@@ -20,16 +20,6 @@ app.get("/sharerFiles/:fileName", (req, res) => {
 
 //to render the files
 app.get("/", (req, res) => {
-	// const path = rootPath + '/static/fileInfo.json';
-	// console.log("path", path);
-	// const fileInfo = require(path);
-	// const sharees = JSON.parse(fileInfo.chunks);
-	// console.log("share", sharees);
-
-//sharees.find((sharee) => {return sharee.email === email });
-
-	// const download = res.sendFile(sharees.path, {root: 'static'});
-	// {download}
   res.render("files_form",);
 });
 
@@ -38,28 +28,14 @@ app.get("/", (req, res) => {
 //set up test
 app.post("/sharerFiles/:email", (req, res) => {
 	//point to file location
-	//req.params
   res.render("/");
 });
 
-
-//TODO
-//sharee object will have file name sharee will download-
-//'~sharee.filename' will start downloading upon entering email address
-// express function to send file- should treat as download
-//res.sendFile(sharee.filename, {root: 'static'});
-//add package in ejs?
 
 
 //post to render link on page
 app.post("/", (req, res) => {
 	const path = rootPath + '/static/fileInfo.json';
-
-	// const fileInfo = require(path);
-	// const sharees = JSON.parse(fileInfo.chunks);
-
-
-
 	console.log("Headers: ", req.headers);
 	const fileInfo = require(path);
 	const sharees = JSON.parse(fileInfo.chunks);
@@ -68,15 +44,11 @@ app.post("/", (req, res) => {
 
 
 	if (sharee) {
-			console.log("share", sharee.path)
-		//sharee object - add file name sharee will download
-		//res.redirect(`/${sharee.path}`)
-		//res.sendFile(sharee.path, {root: 'static'});
+		console.log("share", sharee.path)
 		res.download(sharee.path);
 		//start download
 	}
 })
-// console.log("body", req.body)
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
