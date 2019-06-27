@@ -4,7 +4,7 @@
   "description": "a file sharing app",
   "main": "main.js",
   "scripts": {
-    "start": "nohup electron . > ./electron.out | node server.js > ./server.out"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",

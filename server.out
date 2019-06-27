@@ -1,18 +1,1 @@
 Example app listening on port 8080!
-Headers:  { host: 'localhost:8080',
-  connection: 'keep-alive',
-  'content-length': '14',
-  'cache-control': 'max-age=0',
-  origin: 'http://localhost:8080',
-  'upgrade-insecure-requests': '1',
-  'content-type': 'application/x-www-form-urlencoded',
-  'user-agent':
-   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36',
-  accept:
-   'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-  referer: 'http://localhost:8080/',
-  'accept-encoding': 'gzip, deflate, br',
-  'accept-language': 'en-US,en;q=0.9',
-  cookie:
-   'cart=%7B%222%22%3A1%7D; _jungle_session=S1F4cEF2MjcyRGZ0dnkzYXhOM2JQSHNHdzRGNmg0Z1BCM1JlYkVrSHFpc0JnUUF1NFN4MGk2TWgxejBONGhaRWI0aW9OUElHMjNETzY2VDFHSUU3UXJoUmhieVVUSWJHYTN0bHg3czI2cm5EWUZmS2wrU3hmS1JKTnd2SVg3UlZPU0Q4c3h4OFprL2hFRk9mUzhKSDd1YXNiaDAyc3kzeTFWRDVvNmpyZi9UZytGd2Y2enFoMEViYzZJQ2xkazBPaG4xc3VTeVdBdEt1MGhBT1loUTAvdz09LS1SVjRFdEloS0dDNkRQdW5idVhRN1VnPT0%3D--dfccb780d446a2568bbb521d0b50206c1628fabd' }
-share /Users/juliamoses/lighthouse/final/sharer/static/May2017PDFPackage.pdf.sf-part1
