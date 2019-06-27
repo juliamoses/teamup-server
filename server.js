@@ -1,33 +1,15 @@
-
-//node server.js > ./server.out. call using exec
-//instead ping everyone on electorn that link ready
-//get request that starts server
-
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
+const rootPath = require("electron-root-path").rootPath;
 
-//allinside a function- refrence funtion in html 
-//'on click'of start serverbutton in electron
 
 app.use(express.static('static'))
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 
-
-//how directory will be structured
-//hosting a directory
-//ill have each chunk in folder- assigneed to people
 app.set("view engine", "ejs");
-
-//js functions that call comd line using child process
-
-
-//TODO
-//have user enter email address, move chunks to unique folder
-//we give them a link on page render that belongs to that email (and chunk)
-
-//when uploarer
-//loop through chunks for 
 
 
 //render app
@@ -38,7 +20,7 @@ app.get("/sharerFiles/:fileName", (req, res) => {
 
 //to render the files
 app.get("/", (req, res) => {
-  res.render("files_form");
+  res.render("files_form",);
 });
 
 
@@ -46,20 +28,27 @@ app.get("/", (req, res) => {
 //set up test
 app.post("/sharerFiles/:email", (req, res) => {
 	//point to file location
-	//req.params
   res.render("/");
 });
 
+
+
 //post to render link on page
-app.post("", (req, res) => {
-	res.render
+app.post("/", (req, res) => {
+	const path = rootPath + '/static/fileInfo.json';
+	console.log("Headers: ", req.headers);
+	const fileInfo = require(path);
+	const sharees = JSON.parse(fileInfo.chunks);
+	const email = req.body.email;
+	const sharee = sharees.find((sharee) => {return sharee.email === email });
+
+
+	if (sharee) {
+		console.log("share", sharee.path)
+		res.download(sharee.path);
+		//start download
+	}
 })
-
-// //post to update
-// app.post("/order/update", (req, res) => {
-//   res.redirect("order");
-// });
-
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

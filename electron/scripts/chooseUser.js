@@ -130,10 +130,10 @@ function splitFile (filePath) {
   .then (()=> {
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
+
     console.log("133", JSON.parse(session.getItem('chunkInfo')));
     
     window.location.href ="../public/sharerserver.html";
-    
   })
 }
 
@@ -156,7 +156,9 @@ function formatDatabaseJSONObject() {
   let fObject = {}
   fObject.id = session.id;
   fObject.file_name = session.file_name;
+
   const chunkObjects = JSON.parse(session.getItem('chunkInfo'));
+
   fObject.chunks = JSON.stringify(chunkObjects);
   fObject.size = session.file_size;
   fObject.done = false;
