@@ -6,6 +6,7 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
+const rootPath =require('electron-root-path').rootPath;
 
 //allinside a function- refrence funtion in html 
 //'on click'of start serverbutton in electron
@@ -17,6 +18,7 @@ app.use(express.static('static'))
 //how directory will be structured
 //hosting a directory
 //ill have each chunk in folder- assigneed to people
+app.set('views', rootPath + "/views")
 app.set("view engine", "ejs");
 
 //js functions that call comd line using child process
