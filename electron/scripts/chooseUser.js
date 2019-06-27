@@ -134,8 +134,6 @@ function splitFile (filePath) {
     console.log("133", JSON.parse(session.getItem('chunkInfo')));
     
     window.location.href ="../public/sharerserver.html";
-    
-
   })
 }
 

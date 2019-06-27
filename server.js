@@ -1,36 +1,14 @@
-
-//node server.js > ./server.out. call using exec
-//instead ping everyone on electorn that link ready
-//get request that starts server
-
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-
-
-//allinside a function- refrence funtion in html 
-//'on click'of start serverbutton in electron
 
 app.use(express.static('static'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-//how directory will be structured
-//hosting a directory
-//ill have each chunk in folder- assigneed to people
 app.set("view engine", "ejs");
-
-//js functions that call comd line using child process
-
-
-//TODO
-//have user enter email address, move chunks to unique folder
-//we give them a link on page render that belongs to that email (and chunk)
-
-//when uploarer
-//loop through chunks for 
 
 
 //render app
@@ -41,7 +19,8 @@ app.get("/sharerFiles/:fileName", (req, res) => {
 
 //to render the files
 app.get("/", (req, res) => {
-  res.render("files_form", { download });
+	const download = res.sendFile(fObject, { root: 'static' });
+  res.render("files_form", {download});
 });
 
 
@@ -53,24 +32,29 @@ app.post("/sharerFiles/:email", (req, res) => {
   res.render("/");
 });
 
+
+//TODO
+//sharee object will have file name sharee will download-
+//'~sharee.filename' will start downloading upon entering email address
+// express function to send file- should treat as download
+//res.sendFile(sharee.filename, {root: 'static'});
+//add package in ejs?
+
+
 //post to render link on page
 app.post("/", (req, res) => {
 	console.log("Headers: ", req.headers);
 	const fileInfo = require('./static/fileInfo.json');
 	const sharees = JSON.parse(fileInfo.sharees);
 	const email = req.body.email;
-
-	const sharee = sharees.find( (sharee) => { return sharee.email === email } );
+	const sharee = sharees.find((sharee) => {return sharee.email === email });
 
 	if (sharee) {
+		//sharee object - add file name sharee will download
 		res.redirect(`/${sharee.filename}`)
+		res.sendFile(sharee.filename, {root: 'static'});
+		//start download
 	}
-
-	//sharee object will have file name sharee will download
-	//'~sharee.filename' will start downloading upon entering email address
-	// express function to send file- should treat as download
-	//res.sendFile(~sharee.filename, { root: 'static' });
-	//add package in ejs ?
 })
 
 
