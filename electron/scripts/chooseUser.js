@@ -129,7 +129,7 @@ function splitFile (filePath) {
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
     writeJSONDataFile();
-    //window.location.href ="../public/sharerserver.html";
+    window.location.href ="../public/sharerserver.html";
   })
 }
 

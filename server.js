@@ -55,22 +55,22 @@ app.post("/sharerFiles/:email", (req, res) => {
 
 //post to render link on page
 app.post("/", (req, res) => {
+	console.log("Headers: ", req.headers);
 	const fileInfo = require('./static/fileInfo.json');
 	const sharees = JSON.parse(fileInfo.sharees);
 	const email = req.body.email;
 
 	const sharee = sharees.find( (sharee) => { return sharee.email === email } );
 
-	if (sharee)
-	{
-		res.redirect(`/${sharee.filename}`)		
+	if (sharee) {
+		res.redirect(`/${sharee.filename}`)
 	}
 
 	//sharee object will have file name sharee will download
 	//'~sharee.filename' will start downloading upon entering email address
-	// express function to send file- should trewat as download
+	// express function to send file- should treat as download
 	//res.sendFile(~sharee.filename, { root: 'static' });
-	//add package in ejs ? 
+	//add package in ejs ?
 })
 
 
