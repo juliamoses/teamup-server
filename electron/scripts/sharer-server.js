@@ -1,4 +1,3 @@
-
 window.$ = window.jQuery = require('jquery');
 const internalIp = require('internal-ip');
 const sf = require('split-file');
