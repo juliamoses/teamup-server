@@ -128,19 +128,20 @@ function splitFile (filePath) {
   .then (()=> {
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
-    writeJSONDataFile(session);
-    window.location.href ="../public/sharerserver.html";
+    writeJSONDataFile();
+    //window.location.href ="../public/sharerserver.html";
   })
 }
 
-function writeJSONDataFile(data) {
+function writeJSONDataFile() {
   const outputPath = path.join(rootPath, "/static/fileInfo.json");
-  console.log("output path", outputPath);
+  
   if (fs.existsSync(outputPath)) {
     fs.unlinkSync(outputPath);
   }
 
-  fs.writeFile(outputPath, JSON.stringify(data), (err) => {
+  const JSONData = formatDatabaseJSONObject();
+  fs.writeFile(outputPath, JSON.stringify(JSONData), (err) => {
     if (err) throw err;
     console.log("JSON Data written to file succesfully")
   })
@@ -154,7 +155,7 @@ function formatDatabaseJSONObject() {
   fObject.id = session.id;
   fObject.file_name = session.file_name;
   const chunkObjects = JSON.parse(session.chunkInfo);
-  fObject.chunks = chunkObjects;
+  fObject.chunks = JSON.stringify(chunkObjects);
   fObject.size = session.file_size;
   fObject.done = false;
 
