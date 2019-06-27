@@ -131,8 +131,8 @@ function splitFile (filePath) {
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
     console.log("133", JSON.parse(session.getItem('chunkInfo')));
-    //writeJSONDataFile();
-    //window.location.href ="../public/sharerserver.html";
+    
+    window.location.href ="../public/sharerserver.html";
     
   })
 }
