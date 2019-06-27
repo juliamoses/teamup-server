@@ -4,7 +4,7 @@
   "description": "a file sharing app",
   "main": "main.js",
   "scripts": {
-    "start": "nohup electron . > ./electron.out | node server.js > ./server.out"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/juliamoses/teamup-server#readme",
   "devDependencies": {
-    "electron": "^5.0.4"
+    "electron": "^5.0.4",
+    "electron-installer-dmg": "^3.0.0"
   },
   "dependencies": {
     "dotenv": "^8.0.0",
