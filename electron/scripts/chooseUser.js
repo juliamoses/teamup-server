@@ -79,6 +79,7 @@ function getValidSharers() {
   if (finalVal) {
     // Store in session storage
     const session = window.sessionStorage;
+    session.removeItem('chunkInfo');
     session.setItem('sharees', JSON.stringify(finalVal));
    
     // Here is where we need to chunk the file
@@ -119,6 +120,7 @@ function splitFile (filePath) {
 
         
         session.setItem('chunkInfo', JSON.stringify(chunkArray));
+        writeJSONDataFile();
       })
       .catch((err) => {
         console.log("Line 120 ERROR", err)
@@ -128,8 +130,10 @@ function splitFile (filePath) {
   .then (()=> {
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
-    writeJSONDataFile();
+    console.log("133", JSON.parse(session.getItem('chunkInfo')));
+    //writeJSONDataFile();
     //window.location.href ="../public/sharerserver.html";
+    
   })
 }
 
@@ -147,14 +151,12 @@ function writeJSONDataFile() {
   })
 }
 function formatDatabaseJSONObject() {
-  /**
-   * This formats the MongoDB JSON object
-   */
+ 
   session = window.sessionStorage;
   let fObject = {}
   fObject.id = session.id;
   fObject.file_name = session.file_name;
-  const chunkObjects = JSON.parse(session.chunkInfo);
+  const chunkObjects = JSON.parse(session.getItem('chunkInfo'));
   fObject.chunks = JSON.stringify(chunkObjects);
   fObject.size = session.file_size;
   fObject.done = false;
