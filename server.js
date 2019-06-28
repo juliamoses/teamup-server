@@ -3,7 +3,6 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const rootPath = require("electron-root-path").rootPath;
 
-console.log("Line 7 server, ", delegate);
 app.use(express.static('public'))
 
 app.use(express.static('static'))
