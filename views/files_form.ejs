@@ -1,10 +1,25 @@
 <%- include('partials/_header'); %>
 
-<body style="font-size:20px; padding:50px;">
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Team Up</a>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Home <span class="sr-only"></span></a>
+        <a class="nav-item nav-link" href="#">Download</a>
+        <a class="nav-item nav-link" href="#">Upload</a>
+      </div>
+    </div>
+  </nav>
+
   <h1 class="title"> Please enter your e-mail </h1>
   <h3> Once entered, your portion of the download will begin</h3>
    <form action="/" method="POST">
-
   <table>
     <tr>
     <td>Email</td>

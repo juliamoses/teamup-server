@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const rootPath = require("electron-root-path").rootPath;
 
+app.use(express.static('public'))
 
 app.use(express.static('static'))
 app.use(express.json());
@@ -37,6 +38,8 @@ app.get("/download/:email", (req, res) => {
 		return sharee.email === email });
 
 	res.render("download");
+
+	//res.download(sharee.path);
 });
 
 
@@ -72,7 +75,10 @@ app.post("/", (req, res) => {
 
 
 	if (sharee) {
-		res.download(sharee.path);
+		res.download(sharee.path, err =>{
+			
+		});
+
 		//res.redirect("/download/" + sharee.email)
 	}
 })
