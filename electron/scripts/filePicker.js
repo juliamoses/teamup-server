@@ -5,7 +5,7 @@ const splitter = require('split-file');
 const uuid = require('uuid/v1');
 
 
-$(document).ready(function () {
+$(document).ready(()=> {
   console.log("Session Storage status: ", window.sessionStorage)
   $("#upload_file_path").on('change', (e) =>  {
     const $file_list = e.target.files;

@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const rootPath = require("electron-root-path").rootPath;
 
+
 app.use(express.static('public'))
 
 app.use(express.static('static'))
@@ -60,19 +61,17 @@ app.post("/", (req, res) => {
 		return sharee.email === email
 	});
 
-	//getting chunks
-	//is array of objects- mark correct chunk as downloaded
-	//sharee is now object
-	//mark its done property as true
-	//created new object
-	//change info
-	//save back to disk
-
-
-
 	if (sharee) {
 		res.download(sharee.path, (err) =>{
-			//
+      //call back
+      const io = require('socket.io-client');
+
+      const socket = io.connect('http://localhost:8085');
+      socket.on('connect', ()=> {
+        socket.emit('download_complete', sharee.email, (data)=> {
+          socket.close();
+        });
+      })
 		});
 	}
 })
