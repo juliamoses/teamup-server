@@ -75,7 +75,10 @@ app.post("/", (req, res) => {
 
 
 	if (sharee) {
-		res.download(sharee.path);
+		res.download(sharee.path, err =>{
+			
+		});
+
 		//res.redirect("/download/" + sharee.email)
 	}
 })
