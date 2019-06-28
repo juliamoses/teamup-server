@@ -24,6 +24,24 @@ app.get("/", (req, res) => {
 });
 
 
+//for final download page
+app.get("/download/:email", (req, res) => {
+	console.log("param", req.params.email)
+	const email = req.params.email;
+	const path = rootPath + '/static/fileInfo.json';
+	const fileInfo = require(path);
+	const sharees = JSON.parse(fileInfo.chunks);
+	const sharee = sharees.find((sharee) => {
+
+		console.log('bah', sharee)
+		return sharee.email === email });
+
+	res.render("download");
+});
+
+
+
+
 //server will look for file assoiated with email
 //set up test
 app.post("/sharerFiles/:email", (req, res) => {
@@ -36,17 +54,26 @@ app.post("/sharerFiles/:email", (req, res) => {
 //post to render link on page
 app.post("/", (req, res) => {
 	const path = rootPath + '/static/fileInfo.json';
-	console.log("Headers: ", req.headers);
 	const fileInfo = require(path);
 	const sharees = JSON.parse(fileInfo.chunks);
 	const email = req.body.email;
-	const sharee = sharees.find((sharee) => {return sharee.email === email });
+	const sharee = sharees.find((sharee) => {
+		return sharee.email === email
+	});
+
+	//getting chunks
+	//is array of objects- mark correct chunk as downloaded
+	//sharee is now object
+	//mark its done property as true
+	//created new object
+	//change info
+	//save back to disk
+
 
 
 	if (sharee) {
-		console.log("share", sharee.path)
 		res.download(sharee.path);
-		//start download
+		//res.redirect("/download/" + sharee.email)
 	}
 })
 

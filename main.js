@@ -7,6 +7,8 @@ const express = require('./server')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+app.use(express.static('/styles');
+
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
