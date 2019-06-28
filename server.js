@@ -4,7 +4,6 @@ const PORT = process.env.PORT || 8080;
 const rootPath = require("electron-root-path").rootPath;
 
 app.use(express.static('public'))
-
 app.use(express.static('static'))
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

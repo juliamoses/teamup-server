@@ -1,13 +1,18 @@
-
 /*
+
 body {
   margin: 0;
   font-family: 'Raleway', sans-serif;
   font-size:20px;
   padding:50px;"
-}
-*/
+  background-color: blue;
+}*/
+
 
 h1.title {
 	
+}
+
+nav.navbar {
+	background-color: #4287f5;
 }
