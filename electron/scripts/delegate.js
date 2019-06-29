@@ -21,7 +21,7 @@ function updateJSONFile(email_data) {
   console.log("Line 18", myObject);
   const parsedChunkData = JSON.parse(fileInfo.chunks);
   console.log("Line 21 BEFORE ", parsedChunkData);
-
+  setTimeout(function() {}, 10);
   for (let i = 0; i < parsedChunkData.length; i++) {
     if (parsedChunkData[i].email === email_data) {
       parsedChunkData[i].done = true;
@@ -34,6 +34,7 @@ function updateJSONFile(email_data) {
   // })
   // We should have an object now
   console.log("Line 28 AFTER ", parsedChunkData);
+  
 
   // Add it to the object
   myObject.chunks = JSON.stringify(parsedChunkData); //
@@ -41,3 +42,5 @@ function updateJSONFile(email_data) {
   // write it to disk
   fs.writeFileSync(path, JSON.stringify(myObject));
 }
+
+// Create a function that updates the user
