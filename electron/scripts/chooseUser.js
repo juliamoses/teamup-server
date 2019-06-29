@@ -168,8 +168,8 @@ function formatDatabaseJSONObject() {
 
 function isValidEmail(emailAddress) {
   const patt = /^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$/
-  //return patt.test(emailAddress);
-  return true; // Testing
+  return patt.test(emailAddress);
+  
 }
 
 function iterateThroughValues(p_cols) {

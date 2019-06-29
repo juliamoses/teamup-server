@@ -38,6 +38,7 @@ function updateLocalIP() {
 
 function doAjaxRequest (data) {
   // Post the file chunk data to the remote server
+  console.log(data);
   return $.post('http://localhost:8081/',data)
   .then((success)=> {
     console.log(success);
@@ -64,7 +65,6 @@ function formatDatabaseJSONObject() {
   const chunkObjects = JSON.parse(session.chunkInfo);
   fObject.chunks = JSON.stringify(chunkObjects);
   fObject.size = session.file_size;
-  fObject.done = false;
 
   return fObject;
 }
