@@ -4,9 +4,9 @@ const PORT = process.env.PORT || 8080;
 const rootPath = require("electron-root-path").rootPath;
 
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
-app.use(express.static('static'))
+app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
@@ -21,21 +21,21 @@ app.get("/sharerFiles/:fileName", (req, res) => {
 
 //to render the files
 app.get("/", (req, res) => {
-  res.render("files_form",);
+  res.render("files_form");
 });
 
 
 //for final download page
 app.get("/download/:email", (req, res) => {
-	console.log("param", req.params.email)
+	console.log("param", req.params.email);
 	const email = req.params.email;
 	const path = rootPath + '/static/fileInfo.json';
 	const fileInfo = require(path);
 	const sharees = JSON.parse(fileInfo.chunks);
+	
 	const sharee = sharees.find((sharee) => {
-
-		console.log('bah', sharee)
-		return sharee.email === email });
+		return sharee.email === email; 
+	});
 
 	res.render("download");
 
@@ -58,7 +58,7 @@ app.post("/", (req, res) => {
 	const sharees = JSON.parse(fileInfo.chunks);
 	const email = req.body.email;
 	const sharee = sharees.find((sharee) => {
-		return sharee.email === email
+		return sharee.email === email;
 	});
 
 	if (sharee) {
@@ -71,10 +71,10 @@ app.post("/", (req, res) => {
         socket.emit('download_complete', sharee.email, (data)=> {
           socket.close();
         });
-      })
+      });
 		});
 	}
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
