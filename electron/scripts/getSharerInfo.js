@@ -3,6 +3,8 @@ window.$ = window.jQuery = require('jquery');
 const fs = require('fs');
 const splitter = require('split-file');
 const uuid = require('uuid/v1');
+const path = require('path');
+const rootPath = require('electron-root-path').rootPath;
 
 function getSharerInfo() {
   // Obtain values from textboxes
@@ -27,3 +29,14 @@ function getSharerInfo() {
   window.location.href = "pickfile.html"
 }
 
+// List all files in the static folder
+function listFilesInDir() {
+  const directory = rootPath + "/static";
+
+  fs.readdir(directory, (err, files)=> {
+    if (err) throw err;
+    for (const file of files) {
+      console.log(file);
+    }
+  })
+}
