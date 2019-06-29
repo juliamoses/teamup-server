@@ -32,7 +32,7 @@ function updateLocalIP() {
   // Using the internalIPAddress, update the local IP
   internalIp.v4()
   .then (result => {
-    $("#local-ip-label").text(result);
+    $("#local-ip-label").text("Your local IP Address: " + result + ":8080");
   })
 }
 
