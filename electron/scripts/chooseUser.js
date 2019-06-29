@@ -120,7 +120,7 @@ function splitFile (filePath) {
 
         
         session.setItem('chunkInfo', JSON.stringify(chunkArray));
-        writeJSONDataFile();
+        setTimeout(writeJSONDataFile, 10);
       })
       .catch((err) => {
         console.log("Line 120 ERROR", err)
