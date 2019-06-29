@@ -30,11 +30,25 @@ function getSharerInfo() {
 }
 
 // List all files in the static folder
+function hasFiles() {
+  const directory = rootPath + "/static";
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+
+    if (files.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  })
+}
+
 function listFilesInDir() {
   const directory = rootPath + "/static";
 
   fs.readdir(directory, (err, files)=> {
     if (err) throw err;
+    console.log("Files", files);
     for (const file of files) {
       console.log(file);
     }
