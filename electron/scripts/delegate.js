@@ -10,8 +10,12 @@ $(document).ready(()=> {
   io.on('connection', (socket)=> {
     socket.on('download_complete', (email)=> {
       // We need to call a function that
-      console.log("Line 10 socket got a message from Client");
-      updateJSONFile(email);
+			console.log("Line 10 socket got a message from Client");
+			try {
+				updateJSONFile(email); 
+			} catch (err) {
+				console.log("line 17: " + err);
+			}
 		});
 		
 		socket.on('download_started', (email, name)=> {
@@ -22,7 +26,8 @@ $(document).ready(()=> {
 });
 
 function updateJSONFile(email_data) {
-  const myJSON = getJSONFileObject(); // this will get the JSON file and a parsed chunk array
+	const myJSON = getJSONFileObject(); // this will get the JSON file and a parsed chunk array
+	
   console.log("my JSON line 19 ", myJSON);
   const parsedChunkData = myJSON.parsedChunks; // This should be an array of objects
   
@@ -46,10 +51,10 @@ function updateJSONFile(email_data) {
 function getJSONFileObject() {
   // Return the JSON object and the parsed chunk as an array {,}
   const returnObject = {};
-  
-  returnObject.object = require(path);
-  returnObject.parsedChunks = JSON.parse(returnObject.object.chunks);
-  return returnObject;
+	returnObject.object = require(path);
+	returnObject.parsedChunks = JSON.parse(returnObject.object.chunks);
+
+	return returnObject;
 }
 // Create a function that updates the user
 function updateChunkProgress() {
@@ -62,6 +67,7 @@ function updateChunkProgress() {
   const chunksCompleted = getJSONFileObject().parsedChunks.filter(chunk => chunk.done === true).length;
   
   if (chunksCompleted < totalChunks) {
+		console.log("update chunk progress line 79");
     const $chunkStatusCaption = $('<p/>').text(`${chunksCompleted} of ${totalChunks} chunks downloaded by sharees.`);
     $("#upload-section").append($chunkStatusCaption);
     let progressBarWidth = Math.floor(chunksCompleted / totalChunks * 100);
