@@ -61,10 +61,37 @@ function formatDatabaseJSONObject() {
   session = window.sessionStorage;
   let fObject = {};
   fObject.id = session.id;
-  fObject.file_name = session.file_name;
+	fObject.file_name = session.file_name;
+	console.log("line 65 Chunk Info", session)
   const chunkObjects = JSON.parse(session.chunkInfo);
   fObject.chunks = JSON.stringify(chunkObjects);
   fObject.size = session.file_size;
 
   return fObject;
+}
+
+// List all files in the static folder
+function hasFiles() {
+  const directory = rootPath + "/static";
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+
+    if (files.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+function listFilesInDir() {
+  const directory = rootPath + "/static";
+
+  fs.readdir(directory, (err, files)=> {
+    if (err) throw err;
+    console.log("Files", files);
+    for (const file of files) {
+      console.log(file);
+    }
+  });
 }

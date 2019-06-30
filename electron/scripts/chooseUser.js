@@ -53,7 +53,7 @@ function turnMinusButtonONOFF(count) {
 // Called by the chooseshare.html
 function getValidSharers() {
   const p_cols = getShareeDivs();
-  let sharerArray = []
+  let sharerArray = [];
   let foundGap = false; // if this is true, this function returns an empty array
   let foundInvalidEmail = false;
 
@@ -69,7 +69,7 @@ function getValidSharers() {
     } else {
       foundGap = true;
     }
-  })
+  });
 
   if (foundInvalidEmail) {
     alert("Invalid or empty email address detected");
@@ -100,7 +100,7 @@ function splitFile (filePath) {
   shareeArray = JSON.parse(session.getItem('sharees'));
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
   let myId = uuid();
-  const outputPath = path.join(rootPath, "/static/")
+  const outputPath = path.join(rootPath, "/static/");
   session.setItem('id', myId);
 
   
@@ -112,29 +112,28 @@ function splitFile (filePath) {
       const parsedFileNameObject = path.parse(originalFilePath);
       
       const finalDestinationPath = outputPath + parsedFileNameObject.name + parsedFileNameObject.ext;
-      console.log("Line 114 originalFilePath", originalFilePath)
-      const stats = fs.statSync(originalFilePath)
+      console.log("Line 114 originalFilePath", originalFilePath);
+      const stats = fs.statSync(originalFilePath);
       chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email, done: false })
       fsExtra.move(originalFilePath, finalDestinationPath)
       .then(()=> {
 
-        
-				session.setItem('chunkInfo', JSON.stringify(chunkArray));
-				console.log('Line 123 About to write JSON');
-        setTimeout(writeJSONDataFile, 10);
       })
       .catch((err) => {
-        console.log("Line 120 ERROR", err)
-      })
-    })
+        console.log("Line 120 ERROR", err);
+      });
+    });
   })
   .then (()=> {
+		session.setItem('chunkInfo', JSON.stringify(chunkArray));
+		console.log('Line 123 About to write JSON');
+		setTimeout(writeJSONDataFile, 10);
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
 
     console.log("133", JSON.parse(session.getItem('chunkInfo')));
     
-    //window.location.href ="../public/sharerserver.html";
+    $('#next-button-to-sharer-server').css('display', 'block');
   });
 }
 
@@ -145,11 +144,15 @@ function writeJSONDataFile() {
     fs.unlinkSync(outputPath);
   }
 
-  const JSONData = formatDatabaseJSONObject();
+	const JSONData = formatDatabaseJSONObject();
+	
   fs.writeFile(outputPath, JSON.stringify(JSONData), (err) => {
-    if (err) throw err;
-    console.log("JSON Data written to file succesfully")
-  })
+    if (err) {
+			alert('Unable to save fileInfo.json');
+			throw err;
+		}
+    console.log("JSON Data written to file succesfully");
+  });
 }
 function formatDatabaseJSONObject() {
  
@@ -189,3 +192,6 @@ function createShareerInput () {
 }
 
 
+function navigateToSharerServer() {
+	window.location.href = "sharerserver.html";
+}

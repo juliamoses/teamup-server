@@ -65,7 +65,7 @@ app.post("/", (req, res) => {
 		// Send a signal message before starting the download
 		const downloadSocket = io.connect('http://localhost:8085');
 		downloadSocket.on('connect', ()=> {
-			downloadSocket.emit('download_started', sharee.email, (data)=> {
+			downloadSocket.emit('download_started', sharee.email, sharee.name, (data)=> {
 				downloadSocket.close();
 			});
 		});

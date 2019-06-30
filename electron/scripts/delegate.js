@@ -3,6 +3,8 @@ const io = require('socket.io')(8085);
 const rootPath = require("electron-root-path").rootPath;
 const fs = require('fs');
 const path = rootPath + '/static/fileInfo.json';
+let currentDownloads = [];
+
 $(document).ready(()=> {
   // Start a socket sever upon loading
   io.on('connection', (socket)=> {
@@ -12,9 +14,9 @@ $(document).ready(()=> {
       updateJSONFile(email);
 		});
 		
-		socket.on('download_started', (email)=> {
+		socket.on('download_started', (email, name)=> {
 			// A download has started
-			alert(`Download started from user ${email}`);
+			console.log(`Line 19: ${name} has downloaded with email ${email}`);
 		});
   });
 });
@@ -78,11 +80,14 @@ function updateChunkProgress() {
     // Create a new progress bar
     const progressBarContainer = $('<div/>').addClass('progress');
     const progressBar = $('<div/>').attr('role', 'progressbar').addClass('progress-bar bg-success').css('width', progressBarWidth + "%");
-    progressBarContainer.append(progressBar);
+    
+		const checkMarkGlyph = $('<span/>').addClass('glyphicon glyphicon-ok');
+		progressBarContainer.append(progressBar, checkMarkGlyph);
     $("#upload-section").append(progressBarContainer);
-
+		
     // Create a confirmation check mark
-
+		// Show the delete button
+		$("#delete-files").css('display', 'block'); 
     
   }
 }
