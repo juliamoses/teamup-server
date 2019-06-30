@@ -14,19 +14,19 @@ function getSharerInfo() {
   // Ensure there are no extra white spaces
   $sharer_email = $sharer_email.trim();
   $sharer_name = $sharer_name.trim();
-  sharerObject = { sharerName: $sharer_name, sharerEmail: $sharer_email }
+  sharerObject = { sharerName: $sharer_name, sharerEmail: $sharer_email };
 
   //writeDataFileToDisk(sharerObject);
   const myStorage = window.sessionStorage;
   myStorage.clear();
-  myStorage.setItem('sharer_name', $sharer_name)
-  myStorage.setItem('sharer_email', $sharer_email)
+  myStorage.setItem('sharer_name', $sharer_name);
+  myStorage.setItem('sharer_email', $sharer_email);
   
   if ($sharer_email === "" ||  $sharer_name === "") {
     alert('Enter name and e-mail');
     return;
   }
-  window.location.href = "pickfile.html"
+  window.location.href = "pickfile.html";
 }
 
 // List all files in the static folder
@@ -40,7 +40,7 @@ function hasFiles() {
     } else {
       return false;
     }
-  })
+  });
 }
 
 function listFilesInDir() {
@@ -52,5 +52,5 @@ function listFilesInDir() {
     for (const file of files) {
       console.log(file);
     }
-  })
+  });
 }

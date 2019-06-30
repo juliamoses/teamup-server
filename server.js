@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 const rootPath = require("electron-root-path").rootPath;
-
+const io = require('socket.io-client');
 
 app.use(express.static('public'));
 
@@ -32,7 +32,7 @@ app.get("/download/:email", (req, res) => {
 	const path = rootPath + '/static/fileInfo.json';
 	const fileInfo = require(path);
 	const sharees = JSON.parse(fileInfo.chunks);
-	
+
 	const sharee = sharees.find((sharee) => {
 		return sharee.email === email; 
 	});
@@ -62,10 +62,17 @@ app.post("/", (req, res) => {
 	});
 
 	if (sharee) {
+		// Send a signal message before starting the download
+		const downloadSocket = io.connect('http://localhost:8085');
+		downloadSocket.on('connect', ()=> {
+			downloadSocket.emit('download_started', sharee.email, (data)=> {
+				downloadSocket.close();
+			});
+		});
+
 		res.download(sharee.path, (err) =>{
       //call back
-      const io = require('socket.io-client');
-
+      
       const socket = io.connect('http://localhost:8085');
       socket.on('connect', ()=> {
         socket.emit('download_complete', sharee.email, (data)=> {

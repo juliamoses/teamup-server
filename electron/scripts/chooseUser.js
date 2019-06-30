@@ -11,7 +11,7 @@ function increaseInputs() {
   // This increases the Name-Email inputs when the user clicks the plus signs
   $("#sharee_container").append(createShareerInput());
   
-  const cols = [...$("#sharee_container").find(".each-input-div")]
+  const cols = [...$("#sharee_container").find(".each-input-div")];
 
   console.log(cols);
   // Show or hide the minus-button depending on the amount of fields
@@ -119,7 +119,8 @@ function splitFile (filePath) {
       .then(()=> {
 
         
-        session.setItem('chunkInfo', JSON.stringify(chunkArray));
+				session.setItem('chunkInfo', JSON.stringify(chunkArray));
+				console.log('Line 123 About to write JSON');
         setTimeout(writeJSONDataFile, 10);
       })
       .catch((err) => {
@@ -133,8 +134,8 @@ function splitFile (filePath) {
 
     console.log("133", JSON.parse(session.getItem('chunkInfo')));
     
-    window.location.href ="../public/sharerserver.html";
-  })
+    //window.location.href ="../public/sharerserver.html";
+  });
 }
 
 function writeJSONDataFile() {

@@ -25,15 +25,15 @@ $(document).ready(function (){
   .catch((err)=> {
     $('#upload-section').append(returnErrorMessage("Unable to communicate with remote server."));
     $('#upload-section').append(returnErrorMessage("Please close the application and try again."));
-  })
-})
+  });
+});
 
 function updateLocalIP() {
   // Using the internalIPAddress, update the local IP
   internalIp.v4()
   .then (result => {
     $("#local-ip-label").text("Your local IP Address: " + result + ":8080");
-  })
+  });
 }
 
 function doAjaxRequest (data) {
@@ -59,7 +59,7 @@ function formatDatabaseJSONObject() {
    * This formats the MongoDB JSON object
    */
   session = window.sessionStorage;
-  let fObject = {}
+  let fObject = {};
   fObject.id = session.id;
   fObject.file_name = session.file_name;
   const chunkObjects = JSON.parse(session.chunkInfo);

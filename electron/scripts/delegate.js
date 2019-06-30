@@ -8,15 +8,20 @@ $(document).ready(()=> {
   io.on('connection', (socket)=> {
     socket.on('download_complete', (email)=> {
       // We need to call a function that
-      console.log("Line 10 socket got a message from Client")
+      console.log("Line 10 socket got a message from Client");
       updateJSONFile(email);
-    })
-  })
-})
+		});
+		
+		socket.on('download_started', (email)=> {
+			// A download has started
+			alert(`Download started from user ${email}`);
+		});
+  });
+});
 
 function updateJSONFile(email_data) {
   const myJSON = getJSONFileObject(); // this will get the JSON file and a parsed chunk array
-  console.log("my JSON line 19 ", myJSON)
+  console.log("my JSON line 19 ", myJSON);
   const parsedChunkData = myJSON.parsedChunks; // This should be an array of objects
   
   
@@ -52,7 +57,7 @@ function updateChunkProgress() {
 
   // Let's get a current count of total chunks
   const totalChunks = getJSONFileObject().parsedChunks.length;
-  const chunksCompleted = getJSONFileObject().parsedChunks.filter(chunk => chunk.done === true).length
+  const chunksCompleted = getJSONFileObject().parsedChunks.filter(chunk => chunk.done === true).length;
   
   if (chunksCompleted < totalChunks) {
     const $chunkStatusCaption = $('<p/>').text(`${chunksCompleted} of ${totalChunks} chunks downloaded by sharees.`);
