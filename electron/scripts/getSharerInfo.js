@@ -5,6 +5,12 @@ const splitter = require('split-file');
 const uuid = require('uuid/v1');
 const path = require('path');
 const rootPath = require('electron-root-path').rootPath;
+const pathJoiner = require('path');
+
+$(document).ready(()=> {
+	// Delete any files
+	DeleteFilesInStaticDirectory();
+});
 
 function getSharerInfo() {
   // Obtain values from textboxes
@@ -29,28 +35,25 @@ function getSharerInfo() {
   window.location.href = "pickfile.html";
 }
 
-// List all files in the static folder
-function hasFiles() {
+function DeleteFilesInStaticDirectory() {
   const directory = rootPath + "/static";
   fs.readdir(directory, (err, files) => {
     if (err) throw err;
 
     if (files.length > 0) {
-      return true;
+      files.forEach((file) => {
+				fs.unlink(pathJoiner.join(directory, file), err => {
+					if (err) throw err;
+					console.log(`${file} deleted.`);
+				});
+			});
+			// Disable the button and change the caption
+			return true;
+		
+
     } else {
-      return false;
-    }
-  });
-}
-
-function listFilesInDir() {
-  const directory = rootPath + "/static";
-
-  fs.readdir(directory, (err, files)=> {
-    if (err) throw err;
-    console.log("Files", files);
-    for (const file of files) {
-      console.log(file);
+			console.log(`no files to delete`);
+			return false;
     }
   });
 }

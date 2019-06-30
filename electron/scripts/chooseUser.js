@@ -133,7 +133,8 @@ function splitFile (filePath) {
 
     console.log("133", JSON.parse(session.getItem('chunkInfo')));
     
-    $('#next-button-to-sharer-server').css('display', 'block');
+		$('#next-button-to-sharer-server').css('display', 'block');
+		submitChunkInfo();
   });
 }
 
@@ -194,4 +195,32 @@ function createShareerInput () {
 
 function navigateToSharerServer() {
 	window.location.href = "sharerserver.html";
+}
+
+function submitChunkInfo() {
+	const JSONData = formatDatabaseJSONObject ();
+ 
+  let extractedChunks = JSON.parse(JSONData.chunks);
+  console.log("JSON Data, line 203", JSONData);
+  doAjaxRequest(JSONData)
+  .then((response)=> {
+    console.log("Success", response);
+    // Success - display the download status
+  })
+  .catch((err)=> {
+    console.log("We weren't able to send chunk info to the TeamUp database at this time. It is likely not online. However, you may continue.");
+  });
+}
+function doAjaxRequest (data) {
+  // Post the file chunk data to the remote server
+ 
+  return $.post('http://localhost:8081/',data)
+  .then((success)=> {
+    console.log(success);
+    return success; // Success is a promise
+  })
+  .catch((err)=> {
+    // Show an error message
+    throw err; // This will cascade to the calling function
+  });
 }
