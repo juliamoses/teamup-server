@@ -6,13 +6,20 @@ const path = rootPath + '/static/fileInfo.json';
 let currentDownloads = [];
 
 $(document).ready(()=> {
-  // Start a socket sever upon loading
+	// Start a socket sever upon loading
+	updateChunkProgress();
   io.on('connection', (socket)=> {
     socket.on('download_complete', (email)=> {
       // We need to call a function that
-			console.log("Line 10 socket got a message from Client");
+			
 			try {
+				// Alter the currentDownloads array
 				updateJSONFile(email); 
+				currentDownloads = currentDownloads.filter((eachItem) => {
+					console.log("Evaluating line 19 in a loop each item " + eachItem.downloader_email );
+					return eachItem.downloader_email !== email;
+				});
+				console.log("Line 21 CurrentDownload array. Download complete: ",  currentDownloads);
 			} catch (err) {
 				console.log("line 17: " + err);
 			}
@@ -21,6 +28,9 @@ $(document).ready(()=> {
 		socket.on('download_started', (email, name)=> {
 			// A download has started
 			console.log(`Line 19: ${name} has downloaded with email ${email}`);
+			currentDownloads.push({downloader_name: name, downloader_email: email});
+			console.log('Currentdownloader array:', currentDownloads);
+			
 		});
   });
 });
@@ -38,7 +48,7 @@ function updateJSONFile(email_data) {
     }
   }
   
-  console.log("Line 28 AFTER ", parsedChunkData);
+  
   
   // Add it to the object
   myJSON.object.chunks = JSON.stringify(parsedChunkData); //

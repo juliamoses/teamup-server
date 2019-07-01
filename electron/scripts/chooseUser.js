@@ -132,10 +132,9 @@ function splitFile (filePath) {
     $('#progressSpinner').css('display', 'none');
 
     console.log("133", JSON.parse(session.getItem('chunkInfo')));
-    
-		$('#next-button-to-sharer-server').css('display', 'block');
 		submitChunkInfo();
-  });
+		
+	});
 }
 
 function writeJSONDataFile() {
@@ -205,10 +204,12 @@ function submitChunkInfo() {
   doAjaxRequest(JSONData)
   .then((response)=> {
     console.log("Success", response);
-    // Success - display the download status
+		// Success - display the download status
+		$('#next-button-to-sharer-server').css('display', 'block');
   })
   .catch((err)=> {
-    console.log("We weren't able to send chunk info to the TeamUp database at this time. It is likely not online. However, you may continue.");
+		console.log("We weren't able to send chunk info to the TeamUp database at this time. It is likely not online. However, you may continue.");
+		$('#next-button-to-sharer-server').css('display', 'block');
   });
 }
 function doAjaxRequest (data) {

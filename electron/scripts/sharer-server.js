@@ -11,7 +11,7 @@ $(document).ready(function (){
   updateLocalIP();
   session = window.sessionStorage;
   console.log(sessionStorage);
-  $("#team-up-link").text(`http://localhost:3000//${session.id}`);
+  $("#team-up-link").text(`http://localhost:3000/${session.id}`).css('border-style', 'solid');
   // Testdata
   
 });
@@ -20,16 +20,15 @@ function updateLocalIP() {
   // Using the internalIPAddress, update the local IP
   internalIp.v4()
   .then (result => {
-    $("#local-ip-label").text("Your local IP Address: " + result + ":8080");
+    $("#local-ip-label").text("Your local IP Address: " + result + ":8080").css('border-style', 'solid');
   });
 }
-
-
 
 function returnErrorMessage(msg) {
   const errMsg = $('<h5/>', {text: msg}).attr( {id: 'connectionError'}).css('color', 'red');
   return errMsg;
 }
+
 function formatDatabaseJSONObject() {
   /**
    * This formats the MongoDB JSON object
