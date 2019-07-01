@@ -19,6 +19,7 @@ $(document).ready(()=> {
 					console.log("Evaluating line 19 in a loop each item " + eachItem.downloader_email );
 					return eachItem.downloader_email !== email;
 				});
+				showIndividualDownloadStatus();
 				console.log("Line 21 CurrentDownload array. Download complete: ",  currentDownloads);
 			} catch (err) {
 				console.log("line 17: " + err);
@@ -29,11 +30,29 @@ $(document).ready(()=> {
 			// A download has started
 			console.log(`Line 19: ${name} has downloaded with email ${email}`);
 			currentDownloads.push({downloader_name: name, downloader_email: email});
+			showIndividualDownloadStatus();
 			console.log('Currentdownloader array:', currentDownloads);
 			
 		});
   });
 });
+
+function showIndividualDownloadStatus() {
+	$("#individual-downloads").empty(); 
+	if (currentDownloads.length > 0) {
+		currentDownloads.forEach((downloader)=> {
+			const $downloadData = $('<p/>').text(`${downloader.downloader_name} (${downloader.downloader_email}) currently downloading.`);
+			console.log("Line 45 get my current progress bar");
+			const progressBarContainer = $('<div/>').addClass('progress');
+
+			const $pbdiv = $('<div/>').attr('role', 'progressbar').addClass("progress-bar progress-bar-striped progress-bar-animated").css('width', '50%');
+			progressBarContainer.append($pbdiv); 	
+			$("#individual-downloads").append($downloadData, progressBarContainer);
+		});
+	} else {
+		$("individual-downloads").append($('<p/>').text(`No current downloaders.`));
+	}
+}
 
 function updateJSONFile(email_data) {
 	const myJSON = getJSONFileObject(); // this will get the JSON file and a parsed chunk array
@@ -47,9 +66,6 @@ function updateJSONFile(email_data) {
       parsedChunkData[i].done = true;
     }
   }
-  
-  
-  
   // Add it to the object
   myJSON.object.chunks = JSON.stringify(parsedChunkData); //
 
@@ -77,7 +93,7 @@ function updateChunkProgress() {
   const chunksCompleted = getJSONFileObject().parsedChunks.filter(chunk => chunk.done === true).length;
   
   if (chunksCompleted < totalChunks) {
-		console.log("update chunk progress line 79");
+		
     const $chunkStatusCaption = $('<p/>').text(`${chunksCompleted} of ${totalChunks} chunks downloaded by sharees.`);
     $("#upload-section").append($chunkStatusCaption);
     let progressBarWidth = Math.floor(chunksCompleted / totalChunks * 100);
