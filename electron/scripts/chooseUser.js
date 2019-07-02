@@ -220,7 +220,7 @@ function doAjaxRequest (data) {
   return $.ajax({
   
     type: 'POST',
-    url: process.env.DB_IP,
+    url: 'http://172.105.10.189',
     data: data,
     success: (success)=> {
       return success;
