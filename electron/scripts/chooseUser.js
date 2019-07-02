@@ -117,7 +117,6 @@ function splitFile (filePath) {
       chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email, done: false })
       fsExtra.move(originalFilePath, finalDestinationPath)
       .then(()=> {
-
       })
       .catch((err) => {
         console.log("Line 120 ERROR", err);
@@ -216,7 +215,7 @@ function submitChunkInfo() {
 }
 function doAjaxRequest (data) {
   // Post the file chunk data to the remote server
-  console.log("Process DB IP", process.env.DB_IP);
+  console.log("AJAX REQUEST data to send", data);
   return $.ajax({
   
     type: 'POST',

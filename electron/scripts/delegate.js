@@ -29,7 +29,12 @@ $(document).ready(()=> {
 		socket.on('download_started', (email, name)=> {
 			// A download has started
 			console.log(`Line 19: ${name} has downloaded with email ${email}`);
-			currentDownloads.push({downloader_name: name, downloader_email: email});
+      currentDownloads.push({downloader_name: name, downloader_email: email});
+      
+      // Do some kind of slide up
+      if ($("#individual-downloads").is(':visible', 'false')) {
+        $("#individual-downloads").slideUp("fast");
+      }
 			showIndividualDownloadStatus();
 			console.log('Currentdownloader array:', currentDownloads);
 			
@@ -47,10 +52,13 @@ function showIndividualDownloadStatus() {
 
 			const $pbdiv = $('<div/>').attr('role', 'progressbar').addClass("progress-bar progress-bar-striped progress-bar-animated").css('width', '50%');
 			progressBarContainer.append($pbdiv); 	
-			$("#individual-downloads").append($downloadData, progressBarContainer);
+      $("#individual-downloads").append($downloadData, progressBarContainer).css('display', 'block');
+      $("#individual-downloads").slideUp();
 		});
 	} else {
-		$("individual-downloads").append($('<p/>').text(`No current downloaders.`));
+    $("#individual-downloads").append($('<p/>').text(`No current downloaders.`));
+    $("#individual-downloads").slideDown("fast");
+    //$("#individual-downloads").css('display', 'none');
 	}
 }
 
