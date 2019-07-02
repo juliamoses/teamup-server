@@ -5,23 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Sys Info Title</title>
-  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+  <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
   <script src="../scripts/getSharerInfo.js"></script>
 </head>
-<body>
-    <div class="jumbotron">
-      <h1 class="display-3">Team Up</h1>
-      <h2> Sharer Window</h2>
-      <div class="form-group">
-        <label for="sharer_name"> Your Name</label>
-        <input type="text" class="form-control" id="sharer_name" aria-describedby="emailHelp" placeholder="Name" required>
-        <label for="sharer_email">Email address</label>
-        <input type="email" class="form-control" id="sharer_email" aria-describedby="emailHelp" placeholder="Enter email" required>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
-      <button type="button" onclick= "getSharerInfo()" class="btn btn-primary btn-lg">Next</button>
-     
-    </div>
+
+
+<body mainWindow.maximize();
+        style="height: 100%;
+        width: 100%; 
+        color: #ffffff;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url(images/gradient1.jpg);">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light"
+    border: 2px solid black;
+    color: black;
+    font-family: 'Raleway', sans-serif;>
+      <a class="navbar-brand" href="#">Team Up</a>
+  </nav>
+
+  <div style="padding: 2rem;">
+  <h3 > Share files <i>fast</i></h3>
+
+  <div class="form-group">
+    <label for="sharer_name"> Your Name</label>
+    <input type="text" class="form-control" id="sharer_name" aria-describedby="emailHelp" placeholder="Name" required>
+    <label for="sharer_email">Email address</label>
+    <input type="email" class="form-control" id="sharer_email" aria-describedby="emailHelp" placeholder="Enter email" required>
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+
+  <button type="button" onclick= "getSharerInfo()" class="btn btn-primary btn-lg">Next</button>
+</div>
 </body>
 
 <script>

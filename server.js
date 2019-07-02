@@ -4,9 +4,9 @@ const PORT = process.env.PORT || 8080;
 const rootPath = require("electron-root-path").rootPath;
 const io = require('socket.io-client');
 
-app.use(express.static('public'));
 
-app.use(express.static('static'));
+app.use(express.static('public'))
+app.use(express.static('static'))
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 

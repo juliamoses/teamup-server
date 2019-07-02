@@ -1,0 +1,57 @@
+/*
+
+body {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  font-size:20px;
+  padding:50px;"
+  background-color: blue;
+}*/
+
+.title {
+	font-weight: 800;
+	margin-bottom: 20px;
+}
+
+.title2 {
+	margin-bottom: 20px;
+}
+
+nav.navbar {
+	background-color: #4287f5;
+}
+
+/*please enter email page*/
+.email-form {
+	padding: 35vh 20%;
+	text-align: center;
+	color: black;
+	font-family: 'Raleway', sans-serif;
+	form {
+		display: flex;
+		justify-content: center;
+		font-weight: 800;
+	}
+	input {
+			border: 2px solid black;
+			color: black;
+			font-family: 'Raleway', sans-serif;
+	}
+	input[type="email"] {
+		height: 40px;
+		width: 55%;
+		padding: 10px;
+		margin-right: 10px;
+	}
+	input[type="submit"] {
+		height: 40px;
+		width: 20%;
+	}
+	input[type="submit"]:hover {
+		background-color: #eedbaa;
+		cursor: pointer;
+	}
+}
+
+
+
