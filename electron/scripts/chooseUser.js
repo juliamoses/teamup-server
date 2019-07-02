@@ -206,28 +206,27 @@ function submitChunkInfo() {
   .then((response)=> {
   console.log("Success", response);
 	//Success - display the download status
-	 	$('#next-button-to-sharer-server').css('display', 'block');
-   })
-   .catch((err)=> {
-	 	console.log("We weren't able to send chunk info to the TeamUp database at this time. It is likely not online. However, you may continue.");
-	 	$('#next-button-to-sharer-server').css('display', 'block');
-   });
-  //$('#next-button-to-sharer-server').css('display', 'block');
+  $('#next-button-to-sharer-server').css('display', 'block');
+  })
+  .catch((err)=> {
+    const ajaxStatusErrorMessage ="We weren't able to send chunk info to the TeamUp database at this time. It is likely not online. However, you may continue. ";
+    $("section-status-message").append($('<p/>').text(ajaxStatusErrorMessage));
+    $('#next-button-to-sharer-server').css('display', 'block');
+  });
 }
 function doAjaxRequest (data) {
   // Post the file chunk data to the remote server
   
   return $.ajax({
     type: 'POST',
-    url: 'http://localhost:8081',
+    url: process.env.DB_IP,
     data: data,
     success: (success)=> {
-      console.log("Ajax request successful. " + success);
       return success;
     },
-    error: ()=> {
-      console.log("There was an error");
-      throw err;
+    error: (err)=> {
+      
+      return err;
     }
   })
 } 
