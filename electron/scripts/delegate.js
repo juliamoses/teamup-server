@@ -93,7 +93,6 @@ function updateChunkProgress() {
   const chunksCompleted = getJSONFileObject().parsedChunks.filter(chunk => chunk.done === true).length;
   
   if (chunksCompleted < totalChunks) {
-		
     const $chunkStatusCaption = $('<p/>').text(`${chunksCompleted} of ${totalChunks} chunks downloaded by sharees.`);
     $("#upload-section").append($chunkStatusCaption);
     let progressBarWidth = Math.floor(chunksCompleted / totalChunks * 100);

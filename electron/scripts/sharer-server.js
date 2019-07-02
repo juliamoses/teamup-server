@@ -11,7 +11,7 @@ $(document).ready(function (){
   updateLocalIP();
   session = window.sessionStorage;
   console.log(sessionStorage);
-  $("#team-up-link").text(`http://localhost:3000/${session.id}`).css('border-style', 'solid');
+  $("#team-up-link").text(`http://172.105.10.189/${session.id}`).css('border-style', 'solid');
   // Testdata
   
 });

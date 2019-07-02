@@ -216,8 +216,9 @@ function submitChunkInfo() {
 }
 function doAjaxRequest (data) {
   // Post the file chunk data to the remote server
-  
+  console.log("Process DB IP", process.env.DB_IP);
   return $.ajax({
+  
     type: 'POST',
     url: process.env.DB_IP,
     data: data,
