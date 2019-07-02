@@ -11,7 +11,7 @@ function increaseInputs() {
   // This increases the Name-Email inputs when the user clicks the plus signs
   $("#sharee_container").append(createShareerInput());
   
-  const cols = [...$("#sharee_container").find(".each-input-div")]
+  const cols = [...$("#sharee_container").find(".each-input-div")];
 
   console.log(cols);
   // Show or hide the minus-button depending on the amount of fields
@@ -53,7 +53,7 @@ function turnMinusButtonONOFF(count) {
 // Called by the chooseshare.html
 function getValidSharers() {
   const p_cols = getShareeDivs();
-  let sharerArray = []
+  let sharerArray = [];
   let foundGap = false; // if this is true, this function returns an empty array
   let foundInvalidEmail = false;
 
@@ -69,7 +69,7 @@ function getValidSharers() {
     } else {
       foundGap = true;
     }
-  })
+  });
 
   if (foundInvalidEmail) {
     alert("Invalid or empty email address detected");
@@ -100,7 +100,7 @@ function splitFile (filePath) {
   shareeArray = JSON.parse(session.getItem('sharees'));
   const numChunks = shareeArray.length; // chunk file into parts according to sharee count 
   let myId = uuid();
-  const outputPath = path.join(rootPath, "/static/")
+  const outputPath = path.join(rootPath, "/static/");
   session.setItem('id', myId);
 
   
@@ -112,29 +112,29 @@ function splitFile (filePath) {
       const parsedFileNameObject = path.parse(originalFilePath);
       
       const finalDestinationPath = outputPath + parsedFileNameObject.name + parsedFileNameObject.ext;
-      console.log("Line 114 originalFilePath", originalFilePath)
-      const stats = fs.statSync(originalFilePath)
+      console.log("Line 114 originalFilePath", originalFilePath);
+      const stats = fs.statSync(originalFilePath);
       chunkArray.push({path: finalDestinationPath, amount_uploaded: 0, size: stats.size, name: shareeArray[index].name, email: shareeArray[index].email, done: false })
       fsExtra.move(originalFilePath, finalDestinationPath)
       .then(()=> {
 
-        
-        session.setItem('chunkInfo', JSON.stringify(chunkArray));
-        writeJSONDataFile();
       })
       .catch((err) => {
-        console.log("Line 120 ERROR", err)
-      })
-    })
+        console.log("Line 120 ERROR", err);
+      });
+    });
   })
   .then (()=> {
+		session.setItem('chunkInfo', JSON.stringify(chunkArray));
+		console.log('Line 123 About to write JSON');
+		setTimeout(writeJSONDataFile, 10);
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
 
     console.log("133", JSON.parse(session.getItem('chunkInfo')));
-    
-    window.location.href ="../public/sharerserver.html";
-  })
+		submitChunkInfo();
+		
+	});
 }
 
 function writeJSONDataFile() {
@@ -144,11 +144,15 @@ function writeJSONDataFile() {
     fs.unlinkSync(outputPath);
   }
 
-  const JSONData = formatDatabaseJSONObject();
+	const JSONData = formatDatabaseJSONObject();
+	
   fs.writeFile(outputPath, JSON.stringify(JSONData), (err) => {
-    if (err) throw err;
-    console.log("JSON Data written to file succesfully")
-  })
+    if (err) {
+			alert('Unable to save fileInfo.json');
+			throw err;
+		}
+    console.log("JSON Data written to file succesfully");
+  });
 }
 function formatDatabaseJSONObject() {
  
@@ -168,8 +172,8 @@ function formatDatabaseJSONObject() {
 
 function isValidEmail(emailAddress) {
   const patt = /^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$/
-  //return patt.test(emailAddress);
-  return true; // Testing
+  return patt.test(emailAddress);
+  
 }
 
 function iterateThroughValues(p_cols) {
@@ -188,3 +192,36 @@ function createShareerInput () {
 }
 
 
+function navigateToSharerServer() {
+	window.location.href = "sharerserver.html";
+}
+
+function submitChunkInfo() {
+	const JSONData = formatDatabaseJSONObject ();
+ 
+  let extractedChunks = JSON.parse(JSONData.chunks);
+  console.log("JSON Data, line 203", JSONData);
+  doAjaxRequest(JSONData)
+  .then((response)=> {
+    console.log("Success", response);
+		// Success - display the download status
+		$('#next-button-to-sharer-server').css('display', 'block');
+  })
+  .catch((err)=> {
+		console.log("We weren't able to send chunk info to the TeamUp database at this time. It is likely not online. However, you may continue.");
+		$('#next-button-to-sharer-server').css('display', 'block');
+  });
+}
+function doAjaxRequest (data) {
+  // Post the file chunk data to the remote server
+ 
+  return $.post('http://localhost:8081/',data)
+  .then((success)=> {
+    console.log(success);
+    return success; // Success is a promise
+  })
+  .catch((err)=> {
+    // Show an error message
+    throw err; // This will cascade to the calling function
+  });
+}

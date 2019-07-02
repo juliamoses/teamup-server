@@ -1,3 +1,6 @@
 node_modules
 static
 .env
+server.out
+electron.out
+nohup.out

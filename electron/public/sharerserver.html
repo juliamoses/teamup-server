@@ -6,20 +6,35 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
   <script src="../scripts/sharer-server.js"></script>
-  
-  <title>Choose Sharees </title>
+  <script src="../scripts/delegate.js"></script>
+
+  <title> Uploads and Shares</title>
 </head>
 <body>
   <div id="share-link-div">
     <div style="border-style: solid; border-width: 2px; border-color: white; background-color: darkcyan;">
-      <p style="text-align: center"> Your Team-Up upload link is</p>
+      <p class= "lead" style="text-align: center"> Your Team-Up upload link is</p>
       <p class= "lead" id="team-up-link" style="text-align: center"></p>
-      <p class='lead' id="local-ip-label" style="text-align:center"></p>
+      <p class="lead" id="local-ip-label" style="text-align:center"></p>
     </div>
   </div>
-  <p class='lead'>Files chunks ready to share with your team. Your local IP and share link are above. </p>
+  <p class='lead'>Files chunks are now ready to share with your team!</p> 
+  <p class="lead" style="color: yellow;">Keep this application window open.</p>
+  <p>Your teamates can now connect to you via your local IP address listed above, and download their chunk of the file. </p>
     
-    <div id="upload section">
-      <!-- Section invisible until user clicks the start server button -->
-    </div>
+  <p class='lead'>Once each teammate has downloaded their portion of the file, they can upload their portion at the special URL above, where all uploaded portions
+    will eventually be reassembled to form the original file.</p>
+    <div id="individual-downloads" class="jumbotron">
+			
+		</div>
+    <div id="upload-section" class="jumbotron">
+			<h5> Status </h5>
+			<div id="download-status">
+				<!-- Stuff will be added, deleted here as per the download status -->
+			</div>
+		</div>
+		<!-- This becomes visible once all the chunks are downloaded-->
+		<div id="delete-files" style="display: none;">
+			<button id= "delete-files-btn" type="button" onclick="attemptToDeleteFilesInStaticDirectory()" class="btn btn-danger btn-lg"> Remove Chunks </button>
+		</div>
 </body>

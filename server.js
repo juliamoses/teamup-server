@@ -2,12 +2,13 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 const rootPath = require("electron-root-path").rootPath;
+const io = require('socket.io-client');
+
 
 app.use(express.static('public'))
 app.use(express.static('static'))
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-
 
 app.set("view engine", "ejs");
 
@@ -20,29 +21,26 @@ app.get("/sharerFiles/:fileName", (req, res) => {
 
 //to render the files
 app.get("/", (req, res) => {
-  res.render("files_form",);
+  res.render("files_form");
 });
 
 
 //for final download page
 app.get("/download/:email", (req, res) => {
-	console.log("param", req.params.email)
+	console.log("param", req.params.email);
 	const email = req.params.email;
 	const path = rootPath + '/static/fileInfo.json';
 	const fileInfo = require(path);
 	const sharees = JSON.parse(fileInfo.chunks);
-	const sharee = sharees.find((sharee) => {
 
-		console.log('bah', sharee)
-		return sharee.email === email });
+	const sharee = sharees.find((sharee) => {
+		return sharee.email === email; 
+	});
 
 	res.render("download");
 
 	//res.download(sharee.path);
 });
-
-
-
 
 //server will look for file assoiated with email
 //set up test
@@ -60,27 +58,30 @@ app.post("/", (req, res) => {
 	const sharees = JSON.parse(fileInfo.chunks);
 	const email = req.body.email;
 	const sharee = sharees.find((sharee) => {
-		return sharee.email === email
+		return sharee.email === email;
 	});
 
-	//getting chunks
-	//is array of objects- mark correct chunk as downloaded
-	//sharee is now object
-	//mark its done property as true
-	//created new object
-	//change info
-	//save back to disk
-
-
-
 	if (sharee) {
-		res.download(sharee.path, err =>{
-			
+		// Send a signal message before starting the download
+		const downloadSocket = io.connect('http://localhost:8085');
+		downloadSocket.on('connect', ()=> {
+			downloadSocket.emit('download_started', sharee.email, sharee.name, (data)=> {
+				downloadSocket.close();
+			});
 		});
 
-		//res.redirect("/download/" + sharee.email)
+		res.download(sharee.path, (err) =>{
+      //call back
+      
+      const socket = io.connect('http://localhost:8085');
+      socket.on('connect', ()=> {
+        socket.emit('download_complete', sharee.email, (data)=> {
+          socket.close();
+        });
+      });
+		});
 	}
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

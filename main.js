@@ -3,10 +3,10 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const express = require('./server')
 
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-
 
 function createWindow () {
   // Create the browser window.
@@ -39,7 +39,10 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+  if (process.platform !== 'darwin') {
+		
+		app.quit();
+	}
 })
 
 app.on('activate', function () {

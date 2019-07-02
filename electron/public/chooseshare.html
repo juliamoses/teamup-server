@@ -32,13 +32,16 @@
     <p id="sharee-count-label">(2) sharees</p>
   </div>
   <div>
-    <button id="buttonStartSplit" type="button" onclick="getValidSharers()" class="btn btn-outline-primary">Next</button>
+    <button id="buttonStartSplit" type="button" onclick="getValidSharers()" class="btn btn-outline-primary">Confirm</button>
   </div>
   <div id="section-status-message"> 
     <p id="status-message">Status: Incomplete</p>
     <div id="progressSpinner" class="spinner-border text-warning" role="status" style="display: none;">
       <span class="sr-only">Loading...</span>
-    </div>
+		</div>
+		<div id="next-button-to-sharer-server" style="display: none;">
+				<button id="next-to-sharer" type="button" onclick="navigateToSharerServer()" class="btn btn-outline-primary">Next</button>
+		</div>
   </div>
 </body>
 </html>
