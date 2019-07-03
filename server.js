@@ -80,7 +80,9 @@ app.post("/", (req, res) => {
         });
       });
 		});
-	}
+	} else { 
+    res.sendStatus(400); // Bad request e-mail doesn't exist
+  }
 });
 
 app.listen(PORT, () => {
