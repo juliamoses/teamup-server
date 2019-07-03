@@ -20,7 +20,7 @@ $(document).ready(()=> {
 					return eachItem.downloader_email !== email;
 				});
 				showIndividualDownloadStatus();
-				console.log("Line 21 CurrentDownload array. Download complete: ",  currentDownloads);
+        console.log("Line 21 CurrentDownload array. Download complete: ",  currentDownloads);
 			} catch (err) {
 				console.log("line 17: " + err);
 			}
@@ -28,12 +28,17 @@ $(document).ready(()=> {
 		
 		socket.on('download_started', (email, name)=> {
 			// A download has started
-			console.log(`Line 19: ${name} has downloaded with email ${email}`);
-      currentDownloads.push({downloader_name: name, downloader_email: email});
+      console.log(`Line 19: ${name} has downloaded with email ${email}`);
+      if (!fileAlreadyDownloaded(email)) {
+        currentDownloads.push({downloader_name: name, downloader_email: email});
+      } else {
+        console.log("Line 37, File Already downloaded");
+      }
       
-      // Do some kind of slide up
+      // Do some kind of slide down to show the download progress
       if ($("#individual-downloads").is(':visible', 'false')) {
-        $("#individual-downloads").slideUp("fast");
+        console.log('Line 36 Individual downloads is not visible. Slide it down.')
+        $("#individual-downloads").slideDown("slow");
       }
 			showIndividualDownloadStatus();
 			console.log('Currentdownloader array:', currentDownloads);
@@ -53,19 +58,34 @@ function showIndividualDownloadStatus() {
 			const $pbdiv = $('<div/>').attr('role', 'progressbar').addClass("progress-bar progress-bar-striped progress-bar-animated").css('width', '50%');
 			progressBarContainer.append($pbdiv); 	
       $("#individual-downloads").append($downloadData, progressBarContainer).css('display', 'block');
-      $("#individual-downloads").slideUp();
-		});
+      
+    });
+    
+    if ($("#individual-downloads").is('visible', 'false')) {
+      $("#individual-downloads").slideDown("fast");
+    }
 	} else {
     $("#individual-downloads").append($('<p/>').text(`No current downloaders.`));
-    $("#individual-downloads").slideDown("fast");
+    //console.log("Line 61 - no current downloads, sliding up");
+    $("#individual-downloads").slideUp("fast");
     //$("#individual-downloads").css('display', 'none');
 	}
 }
 
+function fileAlreadyDownloaded(email_data) {
+  // opens the JSON and sees if the chunk associated with the e-mail has already been downloaded
+  const myJSON = getJSONFileObject();
+  const parsedChunkData = myJSON.parsedChunks;
+
+  for (let i = 0; i <= parsedChunkData.length; i++ ) {
+    if (parsedChunkData[i].email === email_data) {
+      return parsedChunkData[i].done;
+    }
+  }
+  throw new "Delegate.js fileAreadyDownloaded-Unable to find e-mail";
+}
 function updateJSONFile(email_data) {
 	const myJSON = getJSONFileObject(); // this will get the JSON file and a parsed chunk array
-	
-  console.log("my JSON line 19 ", myJSON);
   const parsedChunkData = myJSON.parsedChunks; // This should be an array of objects
   
   

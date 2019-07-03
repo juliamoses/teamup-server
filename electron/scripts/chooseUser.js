@@ -125,14 +125,10 @@ function splitFile (filePath) {
   })
   .then (()=> {
 		session.setItem('chunkInfo', JSON.stringify(chunkArray));
-		console.log('Line 123 About to write JSON');
 		setTimeout(writeJSONDataFile, 10);
     $('#status-message').text('Status: Splitting completed');
     $('#progressSpinner').css('display', 'none');
-
-    console.log("133", JSON.parse(session.getItem('chunkInfo')));
 		submitChunkInfo();
-		
 	});
 }
 

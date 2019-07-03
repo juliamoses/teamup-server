@@ -13,7 +13,7 @@ $(document).ready(function (){
   console.log(sessionStorage);
   $("#team-up-link").text(`http://172.105.10.189/${session.id}`).css('border-style', 'solid');
   // Testdata
-  
+  $("#individual-downloads").hide();
 });
 
 function updateLocalIP() {
