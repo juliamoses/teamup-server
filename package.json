@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/juliamoses/teamup-server#readme",
   "devDependencies": {
-    "electron": "^7.2.4"
+    "electron": "^15.5.5"
   },
   "dependencies": {
     "bootstrap": "^3.4.1",
